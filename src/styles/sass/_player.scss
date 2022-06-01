@@ -1,0 +1,125 @@
+.player-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 120px;
+  margin-bottom: 15px;
+}
+
+.play-list {
+  text-align: left;
+}
+
+.play-item {
+  position: relative;
+  padding: 5px;
+  padding-left: 20px;
+  list-style: none;
+  opacity: .8;
+  cursor: pointer;
+  transition: .3s;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: left;
+  align-items: center;
+  gap: 5px;
+}
+
+.play-item:hover {
+  opacity: 1;
+}
+
+.player-icon,
+.slider-icon,
+.change-quote {
+  width: 32px;
+  height: 32px;
+  background-size: 32px 32px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  border: 0;
+  outline: 0;
+  opacity: .8;
+  cursor: pointer;
+  transition: .3s;  
+}
+
+.player-icon:hover,
+.slider-icon:hover,
+.change-quote:hover {
+  opacity: 1;
+}
+
+.player-icon:active,
+.slider-icon:active,
+.change-quote:active {
+  border: 0;
+  outline: 0;  
+  transform: scale(1.1);
+}
+
+.play {
+  width: 40px;
+  height: 40px;
+  background-size: 40px 40px;
+  background-image: url("../assets/svg/play.svg");
+}
+
+.pause {
+  background-image: url("../assets/svg/pause.svg");
+}
+
+.play-prev {
+  background-image: url("../assets/svg/play-prev.svg");
+}
+
+.play-next {
+  background-image: url("../assets/svg/play-next.svg");
+}
+
+.prayer-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.player-time {
+  padding-top: 15px;
+}
+
+.item-play {
+  display: block;
+  width: 16px;
+  height: 16px;
+  background-repeat: no-repeat;
+  background: transparent;
+  background-image: url(../assets/svg/play-smal.svg);
+  cursor: pointer;
+}
+
+
+
+.volume {
+  display: block;
+  background-repeat: no-repeat;
+  background: transparent;
+  width: 26px;
+  height: 20px;
+  background-image: url(../assets/svg/volume.svg);
+  margin-top: auto;
+  cursor: pointer;
+}
+
+.volume-progress {
+  margin-top: 17px;
+  width: 50px;
+}
+
+.audio-progress, .volume-progress {
+  cursor: pointer;
+}
+.mute {
+  background-image: url(../assets/svg/mute.svg);
+}
