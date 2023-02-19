@@ -9,7 +9,7 @@ export default class Clock {
   showDate() {
     const options = {weekday: 'long',month: 'long', day: 'numeric'};
     const currentDate = this.date.toLocaleDateString('en-US', options);
-    this.pageDate.textContent = currentDate;
+    this.pageDate().textContent = currentDate;
   }
 
   showTime() {

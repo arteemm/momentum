@@ -1,4 +1,4 @@
-import { Clock, Weather, Background, Quotes, AudioPlayer } from '../components';
+import { Clock, Weather, Background, Quotes, AudioPlayer, Settings } from '../components';
 
 class App {
   constructor() {
@@ -7,9 +7,12 @@ class App {
     this.background = new Background(this.clock.getTimeOfDay());
     this.quote = new Quotes();
     this.audioPlayer = new AudioPlayer();
+    this.settings = new Settings();
     this.name = () => document.querySelector('.name');
     this.name().value = localStorage.getItem('name') || '';
     this.name().addEventListener('change', (e) => localStorage.setItem('name', e.target.value));
+    this.settingsElem = () => document.querySelector('.settings__button');
+    this.settingsElem().addEventListener('click', () => this.settings.show());
   }
 
   render() {

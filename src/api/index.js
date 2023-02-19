@@ -12,9 +12,9 @@ export const getImage = async (timeOfDay) => {
   return response.json();
 }
 
-export const getQuote = async () => {
-  const url = `https://favqs.com/api/qotd`;
-  const response = await fetch(url);
+// export const getQuote = async () => {
+//   const url = `../quotes.json`;
+//   const response = await fetch(url);
 
-  return response.json();
-}
+//   return response.json();
+// }
