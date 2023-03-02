@@ -12,5 +12,7 @@
         "sourceType": "module"
     },
     "rules": {
+      "import/no-cycle" : "off",
+      "no-plusplus": "off"
     }
 }

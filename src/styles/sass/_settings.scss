@@ -8,9 +8,10 @@
     left: 0px;
     width: 150px;
     height: 200px;
-    background-color: black;
+    background-color: #574f4f;
     z-index: 1;
     bottom: -330px;
+    display: flex;
   }
 
   &__container_active {
@@ -30,5 +31,27 @@
     list-style: none;
     padding: 5px;
     cursor: pointer;
+    position: relative;
+    width: 100%;
+    text-align: left;
   }
+
+  // &__submenu {
+  //   display: none;
+  //   position: absolute;
+  //   right: 0px;
+  //   top: 0;
+  //   width: 150px;
+  //   background-color: #574f4f;
+  // }
+
+  // &__submenu_active {
+  //   display: block;
+  //   right: -170px;
+  // }
+
+  // &__subitem{
+  //   list-style: none;
+  //   text-align: left;
+  // }
 }

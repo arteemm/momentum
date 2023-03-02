@@ -12,4 +12,4 @@ export const viewPlayList = () => {
     playListContainer.append(li);
     li.append(span);
   });
-}
+};

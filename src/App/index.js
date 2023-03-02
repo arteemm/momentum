@@ -7,7 +7,13 @@ class App {
     this.background = new Background(this.clock.getTimeOfDay());
     this.quote = new Quotes();
     this.audioPlayer = new AudioPlayer();
-    this.settings = new Settings();
+    this.settings = new Settings({
+      changeToGit: this.background.getImageLocal.bind(this.background),
+      changeToUnsplash: this.background.getImageUnsplash.bind(this.background),
+      setToUnsplash: this.background.setImageUnsplash.bind(this.background),
+      changeToFlickr: this.background.getImageFlickr.bind(this.background),
+      setToFlickr: this.background.setImageFlickr.bind(this.background),
+    });
     this.name = () => document.querySelector('.name');
     this.name().value = localStorage.getItem('name') || '';
     this.name().addEventListener('change', (e) => localStorage.setItem('name', e.target.value));

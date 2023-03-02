@@ -1,5 +1,6 @@
-import viewWeather from './viewWeather.js';
-import viewQuote from './viewQuote.js';
-import { viewPlayList } from './viewAudio.js';
+import viewWeather from './viewWeather';
+import viewQuote from './viewQuote';
+import { viewPlayList } from './viewAudio';
+import ViewSettings from './viewSettings';
 
-export { viewWeather, viewQuote, viewPlayList };
+export { viewWeather, viewQuote, viewPlayList, ViewSettings };

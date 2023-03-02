@@ -1,4 +1,4 @@
-import { getImage } from '../api';
+import { getImage, getFlickrImage } from '../api';
 
 class Background {
   constructor (timeOfDay) {
@@ -6,21 +6,38 @@ class Background {
     this.timeOfDay = timeOfDay;
     this.slideNext = () => document.querySelector('.slide-next');
     this.slidePrev = () => document.querySelector('.slide-prev');
-    this.addListener = () => this.getImageUnsplash();
-    this.addListenerLocalPrev = () => this.getLocalSlidePrev();
-    this.addListenerLocalNext = () => this.getLocalSlideNext();
     this.randomNum = 0;
+    this.currentSource = this.getImageLocal;
   }
 
-  async getImageUnsplash () {
+  async getImageUnsplash() {
+    this.currentSource = this.setImageUnsplash;
     this.data = await getImage(this.timeOfDay);
+  }
+
+  async setImageUnsplash() {
     const img = new Image();
-    img.src = `${this.data.urls.regular}`;
+    img.src = `${this.data[this.randomNum].urls.regular}`;
     img.onload = () => {
-      document.body.style.backgroundImage = `url('${this.data.urls.regular}')`;
+      document.body.style.backgroundImage = `url('${this.data[this.randomNum].urls.regular}')`;
     };
-    this.slidePrev().addEventListener('click', this.addListener);
-    this.slideNext().addEventListener('click', this.addListener);
+  }
+
+  async getImageFlickr() {
+    this.currentSource = this.setImageFlickr;
+    this.data = await getFlickrImage(this.timeOfDay);
+  }
+
+  async setImageFlickr() {
+    const img = new Image();
+    try {
+      img.src = `${this.data.photos.photo[this.randomNum].url_l}`;
+      img.onload = () => {
+        document.body.style.backgroundImage = `url('${this.data.photos.photo[this.randomNum].url_l}')`;
+      };
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   getRandomNum () {
@@ -29,17 +46,16 @@ class Background {
 
   getUrl () {
     const bgNum = this.randomNum.toString().padStart(2, '0');
-    return `https://raw.githubusercontent.com/rolling-scopes-school/stage1-tasks/assets/images/${this.timeOfDay}/${bgNum}.jpg`
+    return `https://raw.githubusercontent.com/rolling-scopes-school/stage1-tasks/assets/images/${this.timeOfDay}/${bgNum}.jpg`;
   }
 
-  changeListener () {
-    this.slidePrev().removeEventListener('click', this.addListener);
-    this.slideNext().removeEventListener('click', this.addListener);
-    this.slidePrev().addEventListener('click', this.addListenerLocalPrev);
-    this.slideNext().addEventListener('click', this.addListenerLocalNext);    
+  addListener () {
+    this.slidePrev().addEventListener('click', this.getLocalSlidePrev.bind(this));
+    this.slideNext().addEventListener('click', this.getLocalSlideNext.bind(this));    
   }
  
   async getImageLocal () {
+    this.currentSource = this.getImageLocal;
     const img = new Image();
     img.src = `${this.getUrl()}`;
     img.onload = () => {
@@ -52,7 +68,7 @@ class Background {
       this.randomNum = 0;
     }
     this.randomNum++;
-    this.getImageLocal();
+    this.currentSource();
   }
 
   getLocalSlidePrev() {
@@ -60,13 +76,13 @@ class Background {
       this.randomNum = 21;
     }
     this.randomNum--;
-    this.getImageLocal();
+    this.currentSource();
   }
 
   render () {
-    this.changeListener();
+    this.addListener();
     this.getRandomNum();
-    this.getImageLocal();
+    this.currentSource();
   }
 }
 
