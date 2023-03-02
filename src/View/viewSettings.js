@@ -1,9 +1,10 @@
-import { ItemList, LanguageSubmenu, SourceSubmenu } from '../components';
+import { ItemList, LanguageSubmenu, SourceSubmenu, TagsSubmenu } from '../components';
 
 class ViewSettings {
   constructor(props) {
     this.languageSubmenu = new LanguageSubmenu().render();
     this.sourceSubmenu = new SourceSubmenu(props).render();
+    this.tagsSubmenu = new TagsSubmenu(props).render();
   
     this.container = () => document.querySelector('.settings__menu');
     this.submenu = () => document.querySelector('.settings__submenu');
@@ -55,7 +56,10 @@ class ViewSettings {
     const item = new ItemList({
       label: 'тег',
       class: 'settings__item',
-      onClick: () => console.log(333),
+      onClick: () =>{
+        this.currentSubmenu = this.tagsSubmenu;
+        this.changeSubmenu();
+      },
     }).render();
 
     return item;

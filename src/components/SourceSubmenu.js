@@ -2,18 +2,12 @@ import ItemList from './ItemList';
 
 class SourceSubmenu {
   constructor(props) {
-    this.currentSource = 'git';
     this.changeGitSource = props.changeToGit;
     this.getUnsplashSource = props.changeToUnsplash;
     this.setUnsplashSource = props.setToUnsplash;
     this.getFlickrSourse = props.changeToFlickr;
     this.setFlickrSourse = props.setToFlickr;
   }
-
-  // changeGitSource() {
-  //   this.currentSource = 'git';
-  //   console.log(this.currentSource);
-  // }
 
   createSwitchGitItem() {
     const item = new ItemList({

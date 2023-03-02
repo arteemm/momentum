@@ -13,6 +13,8 @@ class App {
       setToUnsplash: this.background.setImageUnsplash.bind(this.background),
       changeToFlickr: this.background.getImageFlickr.bind(this.background),
       setToFlickr: this.background.setImageFlickr.bind(this.background),
+      setTimeOfday: this.background.setTimeOfDay.bind(this.background),
+      currentSource: this.background.currentSource.bind(this.background),
     });
     this.name = () => document.querySelector('.name');
     this.name().value = localStorage.getItem('name') || '';

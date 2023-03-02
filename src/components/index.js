@@ -7,6 +7,7 @@ import Settings from './Settings';
 import ItemList from './ItemList';
 import LanguageSubmenu from './LanguageSubmenu';
 import SourceSubmenu from './SourceSubmenu';
+import TagsSubmenu from './TagsSubmenu';
 
 export {
   Clock,
@@ -18,4 +19,5 @@ export {
   ItemList,
   LanguageSubmenu,
   SourceSubmenu,
+  TagsSubmenu,
 };

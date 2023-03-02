@@ -10,6 +10,10 @@ class Background {
     this.currentSource = this.getImageLocal;
   }
 
+  setTimeOfDay(val) {
+    this.timeOfDay = val;
+  }
+
   async getImageUnsplash() {
     this.currentSource = this.setImageUnsplash;
     this.data = await getImage(this.timeOfDay);
