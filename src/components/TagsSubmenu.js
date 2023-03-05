@@ -1,72 +1,29 @@
-import ItemList from './ItemList';
-
 class TagsSubmenu {
   constructor(props) {
     this.currentSource = props.currentSource;
-    this.setTimeOfDay= props.setTimeOfday;
   }
 
-  createMorningItem() {
-    const item = new ItemList({
-      label: 'Morning',
-      class: 'settings__subitem',
-      onClick: () => {
-        this.setTimeOfDay('morning');
-        this.currentSource();
-      }
-    }).render();
+  createInputItem() {
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'search-bar__input';
+    input.value = '';
 
-    return item;
+    input.onchange = this.handleChange.bind(this);
+
+    return input;
   }
 
-  createAfternoonItem() {
-    const item = new ItemList({
-      label: 'Afternoon',
-      class: 'settings__subitem',
-      onClick: () => {
-        this.setTimeOfDay('afternoon');
-        this.currentSource();
-      }
-    }).render();
-
-    return item;
+  handleChange(e) {
+    this.currentSource(e.target.value);
   }
-
-  createEveningItem() {
-    const item = new ItemList({
-      label: 'Evening',
-      class: 'settings__subitem',
-      onClick: () => {
-        this.setTimeOfDay('evening');
-        this.currentSource();
-      }
-    }).render();
-
-    return item;
-  }
-
-  createNightItem() {
-    const item = new ItemList({
-      label: 'Night',
-      class: 'settings__subitem',
-      onClick: () => {
-        this.setTimeOfDay('night');
-        this.currentSource();
-      }
-    }).render();
-
-    return item;
-  }
-
 
   render() {
-    const container = document.createElement('ul');
+    const container = document.createElement('div');
+    container.onsubmit = this.handleSubmit;
 
     container.append(
-      this.createMorningItem(),
-      this.createAfternoonItem(),
-      this.createEveningItem(),
-      this.createNightItem(),
+      this.createInputItem(),
     );
 
     return container;

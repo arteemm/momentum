@@ -10,13 +10,22 @@ class Background {
     this.currentSource = this.getImageLocal;
   }
 
+  async getCurrentSource(val) {
+    if (this.currentSource === this.setImageUnsplash) {
+      await this.getImageUnsplash(val);
+    } else if (this.currentSource === this.setImageFlickr) {
+      await this.getImageFlickr(val);
+    }
+    await this.currentSource();
+  }
+
   setTimeOfDay(val) {
     this.timeOfDay = val;
   }
 
-  async getImageUnsplash() {
+  async getImageUnsplash(val = this.timeOfDay) {
     this.currentSource = this.setImageUnsplash;
-    this.data = await getImage(this.timeOfDay);
+    this.data = await getImage(val);
   }
 
   async setImageUnsplash() {
@@ -27,9 +36,9 @@ class Background {
     };
   }
 
-  async getImageFlickr() {
+  async getImageFlickr(val = this.timeOfDay) {
     this.currentSource = this.setImageFlickr;
-    this.data = await getFlickrImage(this.timeOfDay);
+    this.data = await getFlickrImage(val);
   }
 
   async setImageFlickr() {

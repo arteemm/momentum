@@ -1,10 +1,16 @@
-import { ItemList, LanguageSubmenu, SourceSubmenu, TagsSubmenu } from '../components';
+import { ItemList, LanguageSubmenu, SourceSubmenu, TagsSubmenu, HiddenSubmenu } from '../components';
+import { ru, eng } from '../locales';
 
 class ViewSettings {
   constructor(props) {
-    this.languageSubmenu = new LanguageSubmenu().render();
+    this.language = 'ru';
+    this.languageSubmenu = new LanguageSubmenu({
+      ...props,
+      changeLanguageSettings: this.setLanguage.bind(this),
+    }).render();
     this.sourceSubmenu = new SourceSubmenu(props).render();
     this.tagsSubmenu = new TagsSubmenu(props).render();
+    this.hiddenSubmenu = new HiddenSubmenu().render();
   
     this.container = () => document.querySelector('.settings__menu');
     this.submenu = () => document.querySelector('.settings__submenu');
@@ -27,8 +33,12 @@ class ViewSettings {
   }
   
   createLanguageItem() {
+    const label = this.language === 'ru' ?
+    ru.translation.settings.language :
+    eng.translation.settings.language;
+
     const item = new ItemList({
-      label: 'язык',
+      label,
       class: 'settings__item',
       onClick: () => {
         this.currentSubmenu = this.languageSubmenu;
@@ -40,8 +50,12 @@ class ViewSettings {
   }
 
   createSourceItem() {
+    const label = this.language === 'ru' ?
+    ru.translation.settings.source :
+    eng.translation.settings.source;
+
     const item = new ItemList({
-      label: 'источник',
+      label,
       class: 'settings__item',
       onClick: () => {
         this.currentSubmenu = this.sourceSubmenu;
@@ -53,8 +67,12 @@ class ViewSettings {
   }
 
   createTagItem() {
+    const label = this.language === 'ru' ?
+    ru.translation.settings.tag :
+    eng.translation.settings.tag;
+
     const item = new ItemList({
-      label: 'тег',
+      label,
       class: 'settings__item',
       onClick: () =>{
         this.currentSubmenu = this.tagsSubmenu;
@@ -66,13 +84,24 @@ class ViewSettings {
   }
 
   createSwitchHiddenItem() {
+    const label = this.language === 'ru' ?
+    ru.translation.settings.hidden :
+    eng.translation.settings.hidden;
+
     const item = new ItemList({
-      label: 'скрыть',
+      label,
       class: 'settings__item',
-      onClick: () => console.log(444),
+      onClick: () => {
+        this.currentSubmenu = this.hiddenSubmenu;
+        this.changeSubmenu();
+      },
     }).render();
 
     return item;
+  }
+
+  setLanguage(language) {
+    this.language = language;
   }
 
   render() {
@@ -84,47 +113,10 @@ class ViewSettings {
       this.createSourceItem(),
       this.createTagItem(),
       this.createSwitchHiddenItem()
-      );
-    
+    );
+        
     return list;
   }
 };
 
 export default ViewSettings;
-
-
-
-{/* <ul class="settings__list">
-          <li class="settings__item">
-            <span class="settings__item-name">язык</span>
-            <ul class="settings__submenu">
-              <li class="settings__subitem">English</li>
-              <li class="settings__subitem">Русский</li>
-            </ul>
-          </li>
-          <li class="settings__item">
-            <span class="settings__item-name">источник</span>
-            <ul class="settings__submenu">
-              <li class="settings__subitem">мои картинки</li>
-              <li class="settings__subitem">сплэш</li>
-            </ul>
-          </li>
-          <li class="settings__item">
-            <span class="settings__item-name">тег</span>
-            <ul class="settings__submenu">
-              <li class="settings__subitem">summer</li>
-              <li class="settings__subitem">autumn</li>
-              <li class="settings__subitem">winter</li>
-              <li class="settings__subitem">spring</li>
-            </ul>
-          </li>
-          <li class="settings__item">
-            <span class="settings__item-name">скрыть</span>
-            <ul class="settings__submenu">
-              <li class="settings__subitem">Погода</li>
-              <li class="settings__subitem">Плеер</li>
-              <li class="settings__subitem">Часы</li>
-              <li class="settings__subitem">Цитаты</li>
-            </ul>
-          </li>
-</ul> */}

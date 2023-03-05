@@ -9,7 +9,18 @@ class Settings {
     this.settingsContainer().addEventListener('click', this.eventTarget.bind(this));
     document.body.addEventListener('click', this.closeAllWindows);
 
-    this.viewSettings = new ViewSettings(props);
+    this.viewSettings = new ViewSettings({
+      ...props,
+      renderSettings: this.renderSubmenu.bind(this),
+    });
+    this.renderSubmenu();
+  }
+
+  renderSubmenu() {
+    while (this.settingsMenu().firstChild) {
+      this.settingsMenu().removeChild(this.settingsMenu().firstChild);
+    }
+  
     this.settingsMenu().append(this.viewSettings.render());
   }
 
