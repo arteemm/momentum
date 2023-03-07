@@ -7,13 +7,17 @@ class SourceSubmenu {
     this.setUnsplashSource = props.setToUnsplash;
     this.getFlickrSourse = props.changeToFlickr;
     this.setFlickrSourse = props.setToFlickr;
+    this.changeInputDisabled = props.changeInputDisabled;
   }
 
   createSwitchGitItem() {
     const item = new ItemList({
       label: 'github',
       class: 'settings__subitem',
-      onClick: this.changeGitSource,
+      onClick: () => {
+        this.changeGitSource();
+        this.changeInputDisabled(true);
+      },
     }).render();
 
     return item;
@@ -22,6 +26,7 @@ class SourceSubmenu {
   async changeUnsplashSource() {
     await this.getUnsplashSource();
     await this.setUnsplashSource();
+    this.changeInputDisabled(false);
   }
 
   createSwitchUnsplashItem() {
@@ -39,6 +44,7 @@ class SourceSubmenu {
   async changeFlickrSource() {
     await this.getFlickrSourse();
     await this.setFlickrSourse();
+    this.changeInputDisabled(false);
   }
 
   createSwitchFlickrItem() {

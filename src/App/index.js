@@ -4,7 +4,10 @@ class App {
   constructor() {
     this.clock = new Clock();
     this.weather = new Weather();
-    this.background = new Background(this.clock.getTimeOfDay());
+    this.background = new Background({
+      timeOfDay: this.clock.getTimeOfDay(),
+      checkResponse: this.getCheckResponse.bind(this),
+    });
     this.quote = new Quotes();
     this.audioPlayer = new AudioPlayer();
     this.settings = new Settings({
@@ -28,9 +31,13 @@ class App {
     this.settingsElem().addEventListener('click', () => this.settings.show());
   }
 
+
+  getCheckResponse() {
+    return this.settings.viewSettings.tagsSubmenu.checkResponse.bind(this.settings.viewSettings.tagsSubmenu);
+  }
+
   changeLanguage(language) {
     this.language = language;
-
   }
 
   render() {

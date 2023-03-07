@@ -1,0 +1,14 @@
+.search-bar{
+
+  &__input {
+
+    &_invalid, &_invalid:focus{
+      border: solid 1px red;
+      outline-color: red;
+    }
+  }
+
+  &__message {
+    color: yellow;
+  }
+}

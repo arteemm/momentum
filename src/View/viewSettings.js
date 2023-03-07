@@ -8,8 +8,11 @@ class ViewSettings {
       ...props,
       changeLanguageSettings: this.setLanguage.bind(this),
     }).render();
-    this.sourceSubmenu = new SourceSubmenu(props).render();
-    this.tagsSubmenu = new TagsSubmenu(props).render();
+    this.sourceSubmenu = new SourceSubmenu({
+      ...props,
+      changeInputDisabled: this.setDisabledInput.bind(this),
+    }).render();
+    this.tagsSubmenu = new TagsSubmenu(props);
     this.hiddenSubmenu = new HiddenSubmenu().render();
   
     this.container = () => document.querySelector('.settings__menu');
@@ -17,6 +20,12 @@ class ViewSettings {
     this.currentSubmenu = this.languageSubmenu;
 
     this.submenu().append(this.currentSubmenu);
+    
+    this.disabledInput = true;
+  }
+
+  setDisabledInput(val) {
+    this.disabledInput = val;
   }
 
   clearSubmenu() {
@@ -75,7 +84,7 @@ class ViewSettings {
       label,
       class: 'settings__item',
       onClick: () =>{
-        this.currentSubmenu = this.tagsSubmenu;
+        this.currentSubmenu = this.tagsSubmenu.render(this.language, this.disabledInput);
         this.changeSubmenu();
       },
     }).render();

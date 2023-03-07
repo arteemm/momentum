@@ -1,13 +1,14 @@
 import { getImage, getFlickrImage } from '../api';
 
 class Background {
-  constructor (timeOfDay) {
+  constructor (props) {
     this.data = {};
-    this.timeOfDay = timeOfDay;
+    this.timeOfDay = props.timeOfDay;
     this.slideNext = () => document.querySelector('.slide-next');
     this.slidePrev = () => document.querySelector('.slide-prev');
     this.randomNum = 0;
     this.currentSource = this.getImageLocal;
+    this.checkResponse = props.checkResponse
   }
 
   async getCurrentSource(val) {
@@ -25,20 +26,42 @@ class Background {
 
   async getImageUnsplash(val = this.timeOfDay) {
     this.currentSource = this.setImageUnsplash;
-    this.data = await getImage(val);
+  
+    try {
+      const data = await getImage(val);
+      if (data.errors) return;
+      this.data = data;
+    } catch(err) {
+      console.error(err);
+    }    
   }
 
   async setImageUnsplash() {
     const img = new Image();
-    img.src = `${this.data[this.randomNum].urls.regular}`;
-    img.onload = () => {
-      document.body.style.backgroundImage = `url('${this.data[this.randomNum].urls.regular}')`;
-    };
+    try {
+      img.src = `${this.data[this.randomNum].urls.regular}`;
+      img.onload = () => {
+        document.body.style.backgroundImage = `url('${this.data[this.randomNum].urls.regular}')`;
+      };
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   async getImageFlickr(val = this.timeOfDay) {
     this.currentSource = this.setImageFlickr;
-    this.data = await getFlickrImage(val);
+
+    try {
+      const data = await getFlickrImage(val);
+      if (!data.photos.photo.length) {
+        this.checkResponse()(true);
+        return;
+      }
+      this.data = data;
+      this.checkResponse()(false);
+    } catch(err) {
+      console.error(err);
+    }
   }
 
   async setImageFlickr() {
