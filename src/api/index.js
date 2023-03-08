@@ -1,8 +1,12 @@
 export const getWeather = async (city, lang) => {
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=${lang}&appid=db94ee57c0b7eedf8f1a3cfec2d23389&units=metric`;
-  const response = await fetch(url);
-
-  return response.json();
+  try {
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=${lang}&appid=db94ee57c0b7eedf8f1a3cfec2d23389&units=metric`;
+    const response = await fetch(url);
+  
+    return response.json();
+  } catch(err) {
+    throw new Error('Weather Err');
+  }
 };
 
 export const getImage = async (timeOfDay) => {

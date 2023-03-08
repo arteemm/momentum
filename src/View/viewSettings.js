@@ -13,7 +13,7 @@ class ViewSettings {
       changeInputDisabled: this.setDisabledInput.bind(this),
     }).render();
     this.tagsSubmenu = new TagsSubmenu(props);
-    this.hiddenSubmenu = new HiddenSubmenu().render();
+    this.hiddenSubmenu = new HiddenSubmenu();
   
     this.container = () => document.querySelector('.settings__menu');
     this.submenu = () => document.querySelector('.settings__submenu');
@@ -101,7 +101,7 @@ class ViewSettings {
       label,
       class: 'settings__item',
       onClick: () => {
-        this.currentSubmenu = this.hiddenSubmenu;
+        this.currentSubmenu = this.hiddenSubmenu.render(this.language);
         this.changeSubmenu();
       },
     }).render();

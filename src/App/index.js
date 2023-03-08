@@ -29,6 +29,8 @@ class App {
     this.name().addEventListener('change', (e) => localStorage.setItem('name', e.target.value));
     this.settingsElem = () => document.querySelector('.settings__button');
     this.settingsElem().addEventListener('click', () => this.settings.show());
+
+    window.addEventListener('beforeunload', this.saveSettings.bind(this));
   }
 
 
@@ -45,6 +47,15 @@ class App {
     this.weather.render();
     this.background.render();
     this.quote.render();
+  }
+
+  saveSettings() {
+    localStorage.setItem('city', this.weather.city);
+    const appSettings = {
+      language: this.settings.viewSettings.language,
+      source: this.background.currentSource.toString(),
+    };
+    localStorage.setItem('settings', JSON.stringify(appSettings));
   }
 }
 

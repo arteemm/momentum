@@ -1,4 +1,5 @@
 import ItemList from './ItemList';
+import { ru, eng } from '../locales';
 
 class HiddenSubmenu {
   constructor() {
@@ -9,11 +10,17 @@ class HiddenSubmenu {
     this.greeting = () => document.querySelector('.greeting-container');
     this.quoteButton = () => document.querySelector('.change-quote');
     this.quote = () => document.querySelector('.quote__container');
+    this.language = 'ru';
+    this.labelSource = () => this.language === 'ru' ? ru.translation.submenu : eng.translation.submenu;
+  }
+
+  changeLanguage(language) {
+    this.language = language;
   }
 
   createAudioHiddenItem() {
     const item = new ItemList({
-      label: 'скрыть аудио плеер',
+      label: this.labelSource().hiddenPlayer,
       class: 'settings__subitem',
       onClick: () => {
         item.classList.toggle('settings__subitem_hidden');
@@ -26,7 +33,7 @@ class HiddenSubmenu {
 
   createWeatherHiddenItem() {
     const item = new ItemList({
-      label: 'скрыть виджет погоды',
+      label: this.labelSource().hiddenWeather,
       class: 'settings__subitem',
       onClick: () => {
         item.classList.toggle('settings__subitem_hidden');
@@ -39,7 +46,7 @@ class HiddenSubmenu {
 
   createTimeHiddenItem() {
     const item = new ItemList({
-      label: 'скрыть часы',
+      label: this.labelSource().hiddenTime,
       class: 'settings__subitem',
       onClick: () => {
         item.classList.toggle('settings__subitem_hidden');
@@ -52,7 +59,7 @@ class HiddenSubmenu {
 
   createDateHiddenItem() {
     const item = new ItemList({
-      label: 'скрыть дату',
+      label: this.labelSource().hiddenDate,
       class: 'settings__subitem',
       onClick: () => {
         item.classList.toggle('settings__subitem_hidden');
@@ -65,7 +72,7 @@ class HiddenSubmenu {
 
   createGreetingHiddenItem() {
     const item = new ItemList({
-      label: 'скрыть приветствие',
+      label: this.labelSource().hiddenGreeting,
       class: 'settings__subitem',
       onClick: () => {
         item.classList.toggle('settings__subitem_hidden');
@@ -78,7 +85,7 @@ class HiddenSubmenu {
 
   createQuoteHiddenItem() {
     const item = new ItemList({
-      label: 'скрыть цитаты',
+      label: this.labelSource().hiddenQuote,
       class: 'settings__subitem',
       onClick: () => {
         item.classList.toggle('settings__subitem_hidden');
@@ -90,7 +97,8 @@ class HiddenSubmenu {
     return item;
   }
 
-  render() {
+  render(language) {
+    this.language = language;
     const container = document.createElement('ul');
 
     container.append(
