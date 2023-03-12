@@ -1,59 +1,45 @@
 import { ViewSettings } from '../View';
+import Button from './Button';
 
 class Settings {
   constructor(props) {
-    this.settingsButton = () => document.querySelector('.settings__button');
-    this.settingsContainer = () => document.querySelector('.settings__container');
-    this.settingsMenu = () => document.querySelector('.settings__menu');
-    this.subMenuArr = () => document.querySelectorAll('.settings__submenu');
-    this.settingsContainer().addEventListener('click', this.eventTarget.bind(this));
-    document.body.addEventListener('click', this.closeAllWindows);
+    this.viewSettings = new ViewSettings(props);
 
-    this.viewSettings = new ViewSettings({
-      ...props,
-      renderSettings: this.renderSubmenu.bind(this),
-    });
-    this.renderSubmenu();
+    this.settingsButton = new Button({
+      label: '',
+      type: 'button',
+      className: 'settings__button',
+      onClick: () => this.showSettings(),
+    }).render();
+    this.settingsContainer = document.createElement('div');
   }
 
-  renderSubmenu() {
-    while (this.settingsMenu().firstChild) {
-      this.settingsMenu().removeChild(this.settingsMenu().firstChild);
-    }
-  
-    this.settingsMenu().append(this.viewSettings.render());
+  showSettings() {
+    this.settingsButton.classList.toggle('settings__button_rotate');
+    this.settingsContainer.classList.toggle('settings__container_active');
   }
 
-  eventTarget(e) {
-    const elem = e.target;
-  
-    if (elem.classList.contains('settings__item-name')) {
-      this.showSubMenu(elem);
-    }
+  createSettingsContainer() {
+    this.settingsContainer.className = 'settings__container';
+
+    this.settingsContainer.append(
+      this.viewSettings.createSettingsList(),
+      this.viewSettings.submenu,
+    );
+
+    return this.settingsContainer;
   }
 
-  showSubMenu(elem) {
-    this.closeAllMenu(elem);
-    elem.nextElementSibling.classList.toggle('settings__submenu_active');
-  }
+  render() {
+    const settings = document.createElement('div');
+    settings.className = 'settings';
 
-  closeAllMenu(current) {
-    this.subMenuArr().forEach(item => {
-        if (item.previousElementSibling !== current) {
-          item.classList.remove('settings__submenu_active');
-        }
-      });
-  }
+    settings.append(
+      this.settingsButton,
+      this.createSettingsContainer(),
+    );
 
-  show() {
-    this.settingsButton().classList.toggle('settings__button_rotate');
-    this.settingsContainer().classList.toggle('settings__container_active');
-  }
-
-  closeAllWindows() {
-    // this.closeAllMenu();
-    // this.settingsButton().classList.remove('settings__button_rotate');
-    // this.settingsMenu().classList.remove('settings__container_active');
+    return settings;
   }
 }
 

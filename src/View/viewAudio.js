@@ -2,7 +2,7 @@ import playList from '../data/playList';
 
 const playListContainer = document.querySelector('.play-list');
 
-export const viewPlayList = () => {
+ const viewPlayList = () => {
   playList.forEach((item, index) => {
     const li = document.createElement('li');
     const span = document.createElement('span');
@@ -13,3 +13,5 @@ export const viewPlayList = () => {
     li.append(span);
   });
 };
+
+export default viewPlayList;

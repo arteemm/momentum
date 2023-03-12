@@ -7,7 +7,7 @@ class SourceSubmenu {
     this.setUnsplashSource = props.setToUnsplash;
     this.getFlickrSourse = props.changeToFlickr;
     this.setFlickrSourse = props.setToFlickr;
-    this.changeInputDisabled = props.changeInputDisabled;
+    this.tagSubmenuInput = props.tagSubmenuInput;
   }
 
   createSwitchGitItem() {
@@ -16,7 +16,7 @@ class SourceSubmenu {
       class: 'settings__subitem',
       onClick: () => {
         this.changeGitSource();
-        this.changeInputDisabled(true);
+        this.tagSubmenuInput.disabled = true;
       },
     }).render();
 
@@ -26,7 +26,7 @@ class SourceSubmenu {
   async changeUnsplashSource() {
     await this.getUnsplashSource();
     await this.setUnsplashSource();
-    this.changeInputDisabled(false);
+    this.tagSubmenuInput.disabled = false;
   }
 
   createSwitchUnsplashItem() {
@@ -44,7 +44,7 @@ class SourceSubmenu {
   async changeFlickrSource() {
     await this.getFlickrSourse();
     await this.setFlickrSourse();
-    this.changeInputDisabled(false);
+    this.tagSubmenuInput.disabled = false;
   }
 
   createSwitchFlickrItem() {

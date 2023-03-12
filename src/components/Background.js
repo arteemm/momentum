@@ -29,8 +29,12 @@ class Background {
   
     try {
       const data = await getImage(val);
-      if (data.errors) return;
+      if (data.errors) {
+        this.checkResponse()(true);
+        return;
+      }
       this.data = data;
+      this.checkResponse()(false);
     } catch(err) {
       console.error(err);
     }    

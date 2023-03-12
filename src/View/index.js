@@ -1,6 +1,6 @@
 import viewWeather from './viewWeather';
-import viewQuote from './viewQuote';
-import { viewPlayList } from './viewAudio';
+import viewPlayList from './viewAudio';
 import ViewSettings from './viewSettings';
+import ViewTags from './ViewTags';
 
-export { viewWeather, viewQuote, viewPlayList, ViewSettings };
+export { viewWeather, viewPlayList, ViewSettings, ViewTags };

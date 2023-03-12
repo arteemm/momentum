@@ -10,104 +10,95 @@ class HiddenSubmenu {
     this.greeting = () => document.querySelector('.greeting-container');
     this.quoteButton = () => document.querySelector('.change-quote');
     this.quote = () => document.querySelector('.quote__container');
-    this.language = 'ru';
-    this.labelSource = () => this.language === 'ru' ? ru.translation.submenu : eng.translation.submenu;
-  }
 
-  changeLanguage(language) {
-    this.language = language;
+    this.audioHiddenItem = new ItemList(this.createAudioHiddenItem());
+    this.weatherHiddenItem = new ItemList(this.createWeatherHiddenItem());
+    this.timeHiddenItem = new ItemList(this.createTimeHiddenItem());
+    this.dateHiddenItem = new ItemList(this.createDateHiddenItem());
+    this.greetingHiddenItem = new ItemList(this.createGreetingHiddenItem());
+    this.quoteHiddenItem = new ItemList(this.createQuoteHiddenItem());
+  }
+  
+  setTextItems(language) {
+    const path = language === 'ru' ? ru.translation.submenu : eng.translation.submenu;
+    this.audioHiddenItem.label = path.hiddenPlayer;
+    this.weatherHiddenItem.label = path.hiddenWeather;
+    this.timeHiddenItem.label = path.hiddenTime;
+    this.greetingHiddenItem.label = path.hiddenGreeting;
+    this.quoteHiddenItem.label = path.hiddenQuote;
   }
 
   createAudioHiddenItem() {
-    const item = new ItemList({
-      label: this.labelSource().hiddenPlayer,
+    return{
       class: 'settings__subitem',
-      onClick: () => {
-        item.classList.toggle('settings__subitem_hidden');
+      onClick: (event) => {
+        event.target.classList.toggle('settings__subitem_hidden');
         this.audioPlayer().classList.toggle('hidden');
       },
-    }).render();
-
-    return item;
+    };
   }
 
   createWeatherHiddenItem() {
-    const item = new ItemList({
-      label: this.labelSource().hiddenWeather,
+    return {
       class: 'settings__subitem',
-      onClick: () => {
-        item.classList.toggle('settings__subitem_hidden');
+      onClick: (event) => {
+        event.target.classList.toggle('settings__subitem_hidden');
         this.weather().classList.toggle('hidden');
       }
-    }).render();
-
-    return item;
+    };
   }
 
   createTimeHiddenItem() {
-    const item = new ItemList({
-      label: this.labelSource().hiddenTime,
+    return {
       class: 'settings__subitem',
-      onClick: () => {
-        item.classList.toggle('settings__subitem_hidden');
+      onClick: (event) => {
+        event.target.classList.toggle('settings__subitem_hidden');
         this.time().classList.toggle('hidden');
       }
-    }).render();
-
-    return item;
+    };
   }
 
   createDateHiddenItem() {
-    const item = new ItemList({
-      label: this.labelSource().hiddenDate,
+    return {
       class: 'settings__subitem',
-      onClick: () => {
-        item.classList.toggle('settings__subitem_hidden');
+      onClick: (event) => {
+        event.target.classList.toggle('settings__subitem_hidden');
         this.date().classList.toggle('hidden');
       },
-    }).render();
-
-    return item;
+    };
   }
 
   createGreetingHiddenItem() {
-    const item = new ItemList({
-      label: this.labelSource().hiddenGreeting,
+    return {
       class: 'settings__subitem',
-      onClick: () => {
-        item.classList.toggle('settings__subitem_hidden');
+      onClick: (event) => {
+        event.target.classList.toggle('settings__subitem_hidden');
         this.greeting().classList.toggle('hidden');
       },
-    }).render();
-
-    return item;
+    };
   }
 
   createQuoteHiddenItem() {
-    const item = new ItemList({
-      label: this.labelSource().hiddenQuote,
+    return {
       class: 'settings__subitem',
-      onClick: () => {
-        item.classList.toggle('settings__subitem_hidden');
+      onClick: (event) => {
+        event.target.classList.toggle('settings__subitem_hidden');
         this.quoteButton().classList.toggle('hidden');
         this.quote().classList.toggle('hidden');
       },
-    }).render();
-
-    return item;
+    };
   }
 
-  render(language) {
-    this.language = language;
+  render() {
     const container = document.createElement('ul');
 
     container.append(
-      this.createAudioHiddenItem(),
-      this.createWeatherHiddenItem(),
-      this.createTimeHiddenItem(),
-      this.createDateHiddenItem(),
-      this.createGreetingHiddenItem(),
-      this.createQuoteHiddenItem(),
+      this.audioHiddenItem.render(),
+      this.weatherHiddenItem.render(),
+      this.timeHiddenItem.render(),
+      this.dateHiddenItem.render(),
+      this.greetingHiddenItem.render(),
+      this.quoteHiddenItem.render(),
     );
 
     return container;

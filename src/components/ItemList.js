@@ -3,14 +3,14 @@ class ItemList {
     this.label = props.label;
     this.class = props.class;
     this.onClick = props.onClick;
+    this.item = document.createElement('li');
   }
 
   createItem() {
-    const item = document.createElement('li');
-    item.className = this.class;
-    item.textContent = this.label;
+    this.item.className = this.class;
+    this.item.textContent = this.label || '';
 
-    return item;    
+    return this.item;    
   }
 
   render() {

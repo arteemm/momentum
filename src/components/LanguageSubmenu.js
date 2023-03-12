@@ -2,27 +2,7 @@ import ItemList from './ItemList';
 
 class LanguageSubmenu {
   constructor(props) {
-    this.changeLanguageClock = props.changeLanguageClock;
-    this.renderClock = props.renderClock;
-    this.changeLanguageWeather = props.changeLanguageWeather;
-    this.renderWeather = props.renderWeather;
-    this.changeLanguageQuote = props.changeLanguageQuote;
-    this.renderQuote = props.renderQuote;
-    this.changeLanguageSettings = props.changeLanguageSettings;
-    this.renderSettings = props.renderSettings;
-  }
-
-
-
-  changeLanguage(language) {
-    this.changeLanguageClock(language);
-    this.changeLanguageWeather(language);
-    this.changeLanguageQuote(language);
-    this.changeLanguageSettings(language);
-    this.renderClock();
-    this.renderWeather();
-    this.renderQuote();
-    this.renderSettings();
+    this.changeLanguageApp = props.changeLanguage;
   }
 
   createSwitchRussianItem() {
@@ -30,7 +10,8 @@ class LanguageSubmenu {
       label: 'русский(RU)',
       class: 'settings__subitem',
       onClick: () => {
-        this.changeLanguage('ru');
+        if (this.language === 'ru') return;
+        this.changeLanguageApp('ru');
       },
     }).render();
 
@@ -42,7 +23,8 @@ class LanguageSubmenu {
       label: 'English(ENG)',
       class: 'settings__subitem',
       onClick: () => {
-        this.changeLanguage('en');
+        if (this.language === 'en') return;
+        this.changeLanguageApp('en');
       },
     }).render();
 

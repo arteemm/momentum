@@ -1,4 +1,4 @@
-import { Clock, Weather, Background, Quotes, AudioPlayer, Settings } from '../components';
+import { Clock, Weather, Background, AudioPlayer, Footer } from '../components';
 
 class App {
   constructor() {
@@ -8,54 +8,55 @@ class App {
       timeOfDay: this.clock.getTimeOfDay(),
       checkResponse: this.getCheckResponse.bind(this),
     });
-    this.quote = new Quotes();
     this.audioPlayer = new AudioPlayer();
-    this.settings = new Settings({
+    this.footer = new Footer({
       changeToGit: this.background.getImageLocal.bind(this.background),
       changeToUnsplash: this.background.getImageUnsplash.bind(this.background),
       setToUnsplash: this.background.setImageUnsplash.bind(this.background),
       changeToFlickr: this.background.getImageFlickr.bind(this.background),
       setToFlickr: this.background.setImageFlickr.bind(this.background),
       currentSource: this.background.getCurrentSource.bind(this.background),
-      changeLanguageClock: this.clock.setLanguage.bind(this.clock),
-      renderClock: this.clock.render.bind(this.clock),
-      changeLanguageWeather: this.weather.setLanguage.bind(this.weather),
-      renderWeather: this.weather.render.bind(this.weather),
-      changeLanguageQuote: this.quote.setLanguage.bind(this.quote),
-      renderQuote: this.quote.render.bind(this.quote),
+      changeLanguage: this.changeLanguageApp.bind(this),
     });
     this.name = () => document.querySelector('.name');
     this.name().value = localStorage.getItem('name') || '';
     this.name().addEventListener('change', (e) => localStorage.setItem('name', e.target.value));
-    this.settingsElem = () => document.querySelector('.settings__button');
-    this.settingsElem().addEventListener('click', () => this.settings.show());
 
     window.addEventListener('beforeunload', this.saveSettings.bind(this));
   }
 
-
   getCheckResponse() {
-    return this.settings.viewSettings.tagsSubmenu.checkResponse.bind(this.settings.viewSettings.tagsSubmenu);
-  }
-
-  changeLanguage(language) {
-    this.language = language;
+    return this.footer.settings.viewSettings.tagsSubmenu.checkResponse.bind(this.footer.settings.viewSettings.tagsSubmenu);
   }
 
   render() {
     this.clock.render();
     this.weather.render();
     this.background.render();
-    this.quote.render();
+
+    const body = document.querySelector('body');
+
+    body.append(
+      this.footer.render(),
+    );
+
+    this.changeLanguageApp('ru');
   }
 
   saveSettings() {
     localStorage.setItem('city', this.weather.city);
     const appSettings = {
-      language: this.settings.viewSettings.language,
+      // language: this.footer.settings.viewSettings.language,
       source: this.background.currentSource.toString(),
     };
     localStorage.setItem('settings', JSON.stringify(appSettings));
+  }
+
+  changeLanguageApp(language) {
+    this.footer.quote.getTypeQuote(language)();
+    this.footer.settings.viewSettings.setTextItems(language);
+    this.footer.settings.viewSettings.hiddenSubmenu.setTextItems(language);
+    this.footer.settings.viewSettings.tagsSubmenu.setTextItems(language);
   }
 }
 

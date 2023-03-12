@@ -1,24 +1,25 @@
 import { ru, eng } from '../locales';
+import Input from './Input';
 
 class TagsSubmenu {
   constructor(props) {
-    this.language = 'ru';
     this.currentSource = props.currentSource;
-    this.inputDisabled = true;
-    this.input = document.createElement('input');
+    this.input = new Input(this.createInputItem());
     this.errorMessage = document.createElement('p');
+    this.label = document.createElement('label');
+  }
+
+  setTextItems(language) {
+    const path = language === 'ru' ? ru.translation.submenu : eng.translation.submenu;
+    this.label.textContent = path.tagDescription;
+    this.errorMessage = path.errorMessage;
   }
 
   createDescription() {
-    const element = document.createElement('label');
-    const text = this.language === 'ru' ?
-      ru.translation.submenu.tagDescription :
-      eng.translation.submenu.tagDescription;
-    element.htmlFor = 'search';
-    element.className = 'search-bar__label';
-    element.textContent = text;
+    this.label.htmlFor = 'search';
+    this.label.className = 'search-bar__label';
 
-    return element;
+    return this.label;
   }
 
   createMessageError() {
@@ -29,25 +30,27 @@ class TagsSubmenu {
 
     this.errorMessage.textContent = text;
     this.errorMessage.className = 'search-bar__message hidden';
+    return this.errorMessage
   }
 
   createInputItem() {
-    this.input.type = 'text';
-    this.input.id = 'search';
-    this.input.className = 'search-bar__input';
-    this.input.value = '';
-    this.input.disabled = this.inputDisabled;
-
-    this.input.onchange = this.handleChange.bind(this);
+    return {
+      type: 'text',
+      onChange: this.handleChange.bind(this),
+      className: 'search-bar__input',
+      id: 'search',
+      value: '',
+      disabled: true,
+    };
   }
 
   checkResponse(invalid = false) {
     if (invalid) {
-      this.input.classList.add('search-bar__input_invalid');
       this.errorMessage.classList.remove('hidden');
+      this.input.inputElement.classList.add('search-bar__input_invalid');
     } else {
-      this.input.classList.remove('search-bar__input_invalid');
       this.errorMessage.classList.add('hidden');
+      this.input.inputElement.classList.remove('search-bar__input_invalid');
     }
   }
 
@@ -55,19 +58,14 @@ class TagsSubmenu {
     this.currentSource(e.target.value);
   }
 
-  render(language, disabled) {
-    this.language = language;
-    this.inputDisabled = disabled;
-    this.createInputItem();
-    this.createMessageError();
-
+  render() {
     const container = document.createElement('div');
     container.onsubmit = this.handleSubmit;
 
     container.append(
       this.createDescription(),
-      this.input,
-      this.errorMessage,
+      this.input.render(),
+      this.createMessageError(),
     );
 
     return container;

@@ -3,125 +3,94 @@ import { ru, eng } from '../locales';
 
 class ViewSettings {
   constructor(props) {
-    this.language = 'ru';
-    this.languageSubmenu = new LanguageSubmenu({
-      ...props,
-      changeLanguageSettings: this.setLanguage.bind(this),
-    }).render();
+    this.languageSubmenu = new LanguageSubmenu(props).render();
+    this.tagsSubmenu = new TagsSubmenu(props);
     this.sourceSubmenu = new SourceSubmenu({
       ...props,
-      changeInputDisabled: this.setDisabledInput.bind(this),
+      tagSubmenuInput: this.tagsSubmenu.input,
     }).render();
-    this.tagsSubmenu = new TagsSubmenu(props);
     this.hiddenSubmenu = new HiddenSubmenu();
   
-    this.container = () => document.querySelector('.settings__menu');
-    this.submenu = () => document.querySelector('.settings__submenu');
+    this.submenu = document.createElement('div');
+    this.submenu.className = ('settings__submenu');
     this.currentSubmenu = this.languageSubmenu;
 
-    this.submenu().append(this.currentSubmenu);
+    this.submenu.append(this.currentSubmenu);
     
-    this.disabledInput = true;
-  }
-
-  setDisabledInput(val) {
-    this.disabledInput = val;
+    this.languageItem = new ItemList(this.createLanguageItem());
+    this.sourceItem = new ItemList(this.createSourceItem());
+    this.tagItem = new ItemList(this.createTagItem());
+    this.switchHiddenItem = new ItemList(this.createSwitchHiddenItem());
   }
 
   clearSubmenu() {
-    const container = this.submenu();
-
-    while (container.firstChild) {
-      container.removeChild(container.firstChild);
+    while (this.submenu.firstChild) {
+      this.submenu.removeChild(this.submenu.firstChild);
     }
   }
 
   changeSubmenu() {
     this.clearSubmenu();
-    this.submenu().append(this.currentSubmenu);
+    this.submenu.append(this.currentSubmenu);
+  }
+
+  setTextItems(language) {
+    const path = language === 'ru' ? ru.translation.settings : eng.translation.settings;
+    this.languageItem.item.textContent = path.language;
+    this.sourceItem.item.textContent = path.source;
+    this.tagItem.item.textContent = path.tag;
+    this.switchHiddenItem.item.textContent = path.hidden;
   }
   
   createLanguageItem() {
-    const label = this.language === 'ru' ?
-    ru.translation.settings.language :
-    eng.translation.settings.language;
-
-    const item = new ItemList({
-      label,
+    return {
       class: 'settings__item',
       onClick: () => {
         this.currentSubmenu = this.languageSubmenu;
         this.changeSubmenu();
-      },
-    }).render();
-
-    return item;
+      }
+    };
   }
 
   createSourceItem() {
-    const label = this.language === 'ru' ?
-    ru.translation.settings.source :
-    eng.translation.settings.source;
-
-    const item = new ItemList({
-      label,
+    return {
       class: 'settings__item',
       onClick: () => {
         this.currentSubmenu = this.sourceSubmenu;
         this.changeSubmenu();
       },
-    }).render();
-
-    return item;
+    };
   }
 
   createTagItem() {
-    const label = this.language === 'ru' ?
-    ru.translation.settings.tag :
-    eng.translation.settings.tag;
-
-    const item = new ItemList({
-      label,
+    return {
       class: 'settings__item',
       onClick: () =>{
-        this.currentSubmenu = this.tagsSubmenu.render(this.language, this.disabledInput);
+        this.currentSubmenu = this.tagsSubmenu.render();
         this.changeSubmenu();
       },
-    }).render();
-
-    return item;
+    };
   }
 
   createSwitchHiddenItem() {
-    const label = this.language === 'ru' ?
-    ru.translation.settings.hidden :
-    eng.translation.settings.hidden;
-
-    const item = new ItemList({
-      label,
+    return {
       class: 'settings__item',
       onClick: () => {
-        this.currentSubmenu = this.hiddenSubmenu.render(this.language);
+        this.currentSubmenu = this.hiddenSubmenu.render();
         this.changeSubmenu();
       },
-    }).render();
-
-    return item;
+    };
   }
 
-  setLanguage(language) {
-    this.language = language;
-  }
-
-  render() {
+  createSettingsList() {
     const list = document.createElement('ul');
     list.className = 'settings__list';
 
     list.append(
-      this.createLanguageItem(),
-      this.createSourceItem(),
-      this.createTagItem(),
-      this.createSwitchHiddenItem()
+      this.languageItem.render(),
+      this.sourceItem.render(),
+      this.tagItem.render(),
+      this.switchHiddenItem.render()
     );
         
     return list;
