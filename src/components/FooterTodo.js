@@ -1,14 +1,12 @@
-// import './header.css';
-import Form from './FormTodo';
+import FormTodo from './FormTodo';
 
 class FooterTodo {
   constructor(props) {
     this.onClick = props.onClick;
-    this.onChange = props.changeMode;
   }
 
   createForm() {
-    const form = new Form({
+    const form = new FormTodo({
       onSubmit: this.onClick,
     }).render();
 
@@ -16,16 +14,12 @@ class FooterTodo {
   }
 
   render() {
-    const component = document.createElement('header');
-    const wrapper = document.createElement('div');
-    component.className = 'header';
-    wrapper.className = 'wrapper header__wrapper';
+    const component = document.createElement('footer');
+    component.className = 'todo__footer';
 
-    wrapper.append(
+    component.append(
       this.createForm(),
     );
-
-    component.append(wrapper);
 
     return component;
   }

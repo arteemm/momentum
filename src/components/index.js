@@ -8,7 +8,7 @@ import LanguageSubmenu from './LanguageSubmenu';
 import SourceSubmenu from './SourceSubmenu';
 import TagsSubmenu from './TagsSubmenu';
 import HiddenSubmenu from './HiddenSubmenu';
-import Tag from './Tag';
+import TodoItem from './TodoItem';
 import FooterTodo from './FooterTodo';
 import Button from './Button';
 import Footer from './Footer';
@@ -24,7 +24,7 @@ export {
   SourceSubmenu,
   TagsSubmenu,
   HiddenSubmenu,
-  Tag,
+  TodoItem,
   FooterTodo,
   Button,
   Footer,

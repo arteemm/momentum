@@ -1,0 +1,51 @@
+.todo {
+  position: relative;
+  color: $black-color;
+
+  &__container {
+    overflow-y: scroll;
+    padding: 5px 5px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 300px;
+    height: 150px;
+    background-color: $text-color;
+    border-radius: 5px;
+    position: absolute;
+    right: 0;
+    top: -170px;
+    opacity: 0;
+    @extend %transitionMiddle;
+
+    &_active {
+      opacity: 1;
+    }
+  }
+
+  &__item {
+
+    &_done {
+      text-decoration: line-through;
+    }
+  }
+
+  &__button{
+    @extend %transitionFast;
+
+
+    &:hover {
+      transform: scale(1.1);
+    }
+
+    &_active {
+      color: $error-color;
+    }
+  }
+
+  &__footer {
+    position: sticky;
+    bottom: 0;
+  }
+}

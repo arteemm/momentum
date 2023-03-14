@@ -6,6 +6,7 @@ class Input {
     this.id = props.id;
     this.value = props.value;
     this.disabled = props.disabled;
+    this.placeholder = props.placeholder;
     this.inputElement = document.createElement('input');
   }
 
@@ -15,6 +16,7 @@ class Input {
     this.inputElement.id = this.id || '';
     this.inputElement.value = this.value || '';
     this.inputElement.disabled = this.disabled || false;
+    this.inputElement.placeholder = this.placeholder || '';
     
     if (this.onChange) {
       this.inputElement.addEventListener('change', this.onChange.bind(this));

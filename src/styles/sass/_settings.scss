@@ -1,7 +1,5 @@
 .settings {
-  position: absolute;
-  bottom: 30px;
-  left: 30px;
+  position: relative;
 
   &__container {
     position: absolute;
@@ -10,7 +8,7 @@
     height: 200px;
     background-color: #574f4f;
     z-index: 1;
-    bottom: -330px;
+    bottom: -530px;
     display: flex;
   }
 

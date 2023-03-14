@@ -1,5 +1,15 @@
 @import './owfont-regular.css';
 
+//abstracts
+@import './abstracts/variables';
+@import './abstracts/placeholders';
+
+//components
+@import './components/button';
+@import './components/todo';
+
+
+//old
 @import './sass/base';
 @import './sass/header';
 @import './sass/player';

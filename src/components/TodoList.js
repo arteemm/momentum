@@ -1,84 +1,94 @@
 import FooterTodo from './FooterTodo';
-import { ViewTags } from '../View';
+import { ViewTodoItem } from '../View';
+import Button from './Button';
 
-class App {
+class TodoList {
   constructor() {
-    this.tagArr = this.getLocalStorage() || [];
-    this.tagListElem = document.createElement('div');
-    this.tagListElem.className = 'tags__list';
-    this.viewTags = new ViewTags(this.tagListElem);
-    this.isReadOnlyMode = false;
-  }
-
-  get tagList() {
-    return this.tagArr;
-  }
-
-  changeMode(e) {
-    this.isReadOnlyMode = (e.target.checked);
-    document.querySelectorAll('.control').forEach(item => {
-      const button = item;
-      button.disabled = this.isReadOnlyMode;
-    });
+    this.todoContainer = document.createElement('div');
+    this.todoListElem = document.createElement('div');
+    this.todoListElem.className = 'todo__list';
+    this.openTodoButton = new Button(this.createOpenTodoButton()).render();
+    this.todoArr = this.getLocalStorage() || [];
+    this.viewTodoItem = new ViewTodoItem(this.todoListElem);
   }
 
   createFooter() {
     const footer = new FooterTodo({
       onClick: this.handleClick.bind(this),
-      changeMode: this.changeMode,
     }).render();
 
     return footer;
   }
 
-  deleteTag(id) {
-    this.tagList.splice(id, 1);
-    this.showTags();
+  deleteItem(id) {
+    this.todoArr.splice(id, 1);
+    this.showTodoList();
   }
 
-  setLocalStorage() {
-    const tagList = JSON.stringify(this.tagList);
-    localStorage.setItem('tagList', tagList);
+  setItemDone(id) {
+    this.todoArr[id].isDone = !this.todoArr[id].isDone;
+    this.showTodoList();
   }
 
   getLocalStorage() {
-    return JSON.parse(localStorage.getItem('tagList'));
+    return JSON.parse(localStorage.getItem('todoList'));
   }
 
-  clearTagList() {
-    this.tagList.length = 0;
-    this.viewTags.clearTags();
-    localStorage.removeItem('tagList');
+  clearTodoList() {
+    this.todoArr.length = 0;
+    this.viewTodoItem.clearTodoList();
+    localStorage.removeItem('todoList');
   }
 
-  showTags() {
-    this.viewTags.showTags({
-      tagsArr: this.tagList,
-      onClick: this.deleteTag.bind(this),
+  showTodoList() {
+    this.viewTodoItem.showTodoList({
+      todoArr: this.todoArr,
+      deleteItem: this.deleteItem.bind(this),
+      setItemDone: this.setItemDone.bind(this),
     });
   }
 
   handleClick(value) {
-    this.tagList.push(value);
-    this.showTags();
+    this.todoArr.push({ value, isDone: false });
+    this.showTodoList();
+  }
+
+  createTodoContainer() {
+    this.todoContainer.className = 'todo__container';
+
+    this.todoContainer.append(
+      this.todoListElem,
+      this.createFooter(),
+    );
+
+    return this.todoContainer
+  }
+
+  showTodo() {
+    this.todoContainer.classList.toggle('todo__container_active');
+    this.openTodoButton.classList.toggle('todo__button_active');
+  }
+
+  createOpenTodoButton(){
+    return {
+      label: 'Todo',
+      type: 'button',
+      className: 'todo__button button',
+      onClick: this.showTodo.bind(this),
+    }
   }
 
   render() {
-    const main = document.getElementById('root');
-    const wrapper = document.createElement('div');
-    wrapper.className = 'wrapper';
-
-    wrapper.append(
-      this.tagListElem,
+    const container = document.createElement('div');
+    container.className = 'todo';
+  
+    container.append(
+      this.openTodoButton,
+      this.createTodoContainer(),
     );
 
-    main.append(
-      wrapper,
-      this.createFooter(),
-    );
-    
-    return main;
+    return container;
   }
 }
 
-export default App;
+export default TodoList;

@@ -37,7 +37,8 @@ class Quote {
     return button;
   }
 
-  getTypeQuote(language) {
+  getTypeQuote(language = this.language) {
+    this.language = language;
     return language === 'ru' ? this.getQuoteDataRu.bind(this) : this.getQuoteDataEn.bind(this);
   }
 

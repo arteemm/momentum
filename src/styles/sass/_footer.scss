@@ -1,15 +1,9 @@
 
 .footer {
-  position: relative;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
-  width: 100%;
-  height: 30vh;
-  min-height: 160px;  
   padding: 20px;
-  overflow: hidden;
 }
 
 .change-quote {
@@ -35,9 +29,7 @@
   background: transparent;
   background-image: url(../assets/svg/icons8-setings.svg);
   transition: 0.5s;
-  position: relative;
   z-index: 22;
-  filter: invert(0%) sepia(1%) saturate(7500%) hue-rotate(308deg) brightness(111%) contrast(101%);
 }
 
 .settings__button_rotate {

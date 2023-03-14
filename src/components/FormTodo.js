@@ -1,8 +1,7 @@
-// import './form.css';
 import Button from './Button';
 import Input from './Input';
 
-class Form {
+class FormTodo {
   constructor(props) {
     this.onSubmit = props.onSubmit;
     this.inputValue = '';
@@ -18,10 +17,11 @@ class Form {
     const input = new Input({
       label: 'Add',
       type: 'text',
+      placeholder: 'Add new task',
       onChange: this.onChange,
      }).render();
 
-     this.clearInput = () => { input.value = ''; };
+    this.clearInput = () => { input.value = ''; };
 
     return input;
   }
@@ -45,24 +45,12 @@ class Form {
     }
   }
 
-  createLabel() {
-    const label = document.createElement('label');
-    label.className = 'form__label';
-    label.textContent = 'Add new tag';
-
-    label.append(
-      this.createInput(),
-    );
-
-    return label;
-  }
-
   render() {
     const component = document.createElement('form');
     component.className = 'header__form form';
 
     component.append(
-      this.createLabel(),
+      this.createInput(),
       this.createButton(),
     );
 
@@ -74,4 +62,4 @@ class Form {
   }
 }
 
-export default Form;
+export default FormTodo;
