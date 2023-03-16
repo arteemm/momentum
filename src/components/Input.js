@@ -17,13 +17,13 @@ class Input {
   render() {
     this.inputElement.type = this.type || 'text';
     this.inputElement.className = this.className;
-    this.inputElement.id = this.id || '';
-    this.inputElement.value = this.value || '';
+    if (this.id) this.inputElement.id = this.id;
+    if (this.value) this.inputElement.value = this.value;
     this.inputElement.disabled = this.disabled || false;
-    this.inputElement.placeholder = this.placeholder || '';
-    this.inputElement.max = this.max || '';
-    this.inputElement.min = this.min || '';
-    this.inputElement.step = this.step || '';
+    if (this.placeholder) this.inputElement.placeholder = this.placeholder;
+    if (this.max) this.inputElement.max = this.max;
+    if (this.min) this.inputElement.min = this.min;
+    if (this.step) this.inputElement.step = this.step;
     
     if (this.onChange) {
       this.inputElement.addEventListener('change', this.onChange.bind(this));

@@ -17,10 +17,12 @@
     right: 0;
     top: -170px;
     opacity: 0;
+    pointer-events: none;
     @extend %transitionMiddle;
 
     &_active {
       opacity: 1;
+      pointer-events: painted;
     }
   }
 

@@ -1,8 +1,10 @@
 import AudioPlayer from './AudioPlayer';
+import Weather from './Weather';
 
 class Header {
   constructor() {
     this.audioPlayer = new AudioPlayer();
+    this.weather = new Weather();
   }
 
   render() {
@@ -11,6 +13,7 @@ class Header {
 
     header.append(
       this.audioPlayer.render(),
+      this.weather.render(),
     );
 
     return header;

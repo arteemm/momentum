@@ -1,9 +1,8 @@
-import { Clock, Weather, Background, Footer, Header } from '../components';
+import { Clock, Background, Footer, Header } from '../components';
 
 class App {
   constructor() {
     this.clock = new Clock();
-    // this.weather = new Weather();
     this.background = new Background({
       timeOfDay: this.clock.getTimeOfDay(),
       checkResponse: this.getCheckResponse.bind(this),
@@ -31,7 +30,6 @@ class App {
 
   render() {
     this.clock.render();
-    // this.weather.render();
     this.background.render();
 
     const body = document.querySelector('body');
@@ -58,6 +56,8 @@ class App {
     this.footer.settings.viewSettings.setTextItems(language);
     this.footer.settings.viewSettings.hiddenSubmenu.setTextItems(language);
     this.footer.settings.viewSettings.tagsSubmenu.setTextItems(language);
+    this.header.weather.viewWeather.setTextItems(language);
+    this.header.weather.getWeatherData();
   }
 }
 

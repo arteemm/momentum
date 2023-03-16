@@ -1,6 +1,5 @@
 import Clock from './Clock';
 import Background from './Background';
-import Weather from './Weather';
 import Settings from './Settings';
 import ItemList from './ItemList';
 import LanguageSubmenu from './LanguageSubmenu';
@@ -17,7 +16,6 @@ import Input from './Input';
 
 export {
   Clock,
-  Weather,
   Background,
   Settings,
   ItemList,

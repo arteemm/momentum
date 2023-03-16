@@ -2,6 +2,7 @@ import ItemList from './ItemList';
 
 class LanguageSubmenu {
   constructor(props) {
+    this.language = 'ru';
     this.changeLanguageApp = props.changeLanguage;
   }
 
@@ -11,6 +12,7 @@ class LanguageSubmenu {
       class: 'settings__subitem',
       onClick: () => {
         if (this.language === 'ru') return;
+        this.language = 'ru'
         this.changeLanguageApp('ru');
       },
     }).render();
@@ -24,6 +26,7 @@ class LanguageSubmenu {
       class: 'settings__subitem',
       onClick: () => {
         if (this.language === 'en') return;
+        this.language = 'en'
         this.changeLanguageApp('en');
       },
     }).render();
