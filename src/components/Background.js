@@ -4,8 +4,6 @@ class Background {
   constructor (props) {
     this.data = {};
     this.timeOfDay = props.timeOfDay;
-    this.slideNext = () => document.querySelector('.slide-next');
-    this.slidePrev = () => document.querySelector('.slide-prev');
     this.randomNum = 0;
     this.currentSource = this.getImageLocal;
     this.checkResponse = props.checkResponse
@@ -88,11 +86,6 @@ class Background {
     const bgNum = this.randomNum.toString().padStart(2, '0');
     return `https://raw.githubusercontent.com/rolling-scopes-school/stage1-tasks/assets/images/${this.timeOfDay}/${bgNum}.jpg`;
   }
-
-  addListener () {
-    this.slidePrev().addEventListener('click', this.getLocalSlidePrev.bind(this));
-    this.slideNext().addEventListener('click', this.getLocalSlideNext.bind(this));    
-  }
  
   async getImageLocal () {
     this.currentSource = this.getImageLocal;
@@ -103,7 +96,7 @@ class Background {
     };
   }
 
-  getLocalSlideNext() {
+  getSlideNext() {
     if (this.randomNum === 20) {
       this.randomNum = 0;
     }
@@ -111,7 +104,7 @@ class Background {
     this.currentSource();
   }
 
-  getLocalSlidePrev() {
+  getSlidePrev() {
     if (this.randomNum === 1) {
       this.randomNum = 21;
     }
@@ -120,7 +113,6 @@ class Background {
   }
 
   render () {
-    this.addListener();
     this.getRandomNum();
     this.currentSource();
   }

@@ -1,10 +1,13 @@
-import { Clock, Background, Footer, Header } from '../components';
+import { Background, Footer, Header, MainSection } from '../components';
 
 class App {
   constructor() {
-    this.clock = new Clock();
+    this.mainSection = new MainSection({
+      getSlidePrev: this.getSlidePrev.bind(this),
+      getSlideNext: this.getSlideNext.bind(this),
+    });
     this.background = new Background({
-      timeOfDay: this.clock.getTimeOfDay(),
+      timeOfDay: this.mainSection.clock.getTimeOfDay(),
       checkResponse: this.getCheckResponse.bind(this),
     });
     this.header = new Header();
@@ -17,25 +20,31 @@ class App {
       currentSource: this.background.getCurrentSource.bind(this.background),
       changeLanguage: this.changeLanguageApp.bind(this),
     });
-    this.name = () => document.querySelector('.name');
-    this.name().value = localStorage.getItem('name') || '';
-    this.name().addEventListener('change', (e) => localStorage.setItem('name', e.target.value));
 
     window.addEventListener('beforeunload', this.saveSettings.bind(this));
   }
+
+  getSlidePrev() {
+    return this.background.getSlidePrev.bind(this.background);
+  }
+
+  getSlideNext() {
+    return this.background.getSlideNext.bind(this.background);
+  }
+
 
   getCheckResponse() {
     return this.footer.settings.viewSettings.tagsSubmenu.checkResponse.bind(this.footer.settings.viewSettings.tagsSubmenu);
   }
 
   render() {
-    this.clock.render();
     this.background.render();
 
-    const body = document.querySelector('body');
+    const root = document.querySelector('.root');
 
-    body.append(
+    root.append(
       this.header.render(),
+      this.mainSection.render(),
       this.footer.render(),
     );
 
@@ -43,6 +52,9 @@ class App {
   }
 
   saveSettings() {
+    // this.name = () => document.querySelector('.name');
+    // this.name().value = localStorage.getItem('name') || '';
+    // this.name().addEventListener('change', (e) => localStorage.setItem('name', e.target.value));
     localStorage.setItem('city', this.weather.city);
     const appSettings = {
       // language: this.footer.settings.viewSettings.language,

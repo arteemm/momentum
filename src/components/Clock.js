@@ -1,13 +1,12 @@
 import {eng, ru} from '../locales';
+import { ViewClock } from '../View';
 
 export default class Clock {
   constructor() {
+    this.viewClock = new ViewClock();
+
     this.language = 'ru';
     this.date = new Date();
-    this.time = () => document.querySelector('.time');
-    this.pageDate = () => document.querySelector('.date');
-    this.greeting = () => document.querySelector('.greeting');
-    this.name = () => document.querySelector('.name');
   }
 
   getFormat() {
@@ -17,7 +16,7 @@ export default class Clock {
   showPlaceholder() {
     const placeholder = this.language === 'ru' ? '[Введите ваше имя]' : '[Enter your name]';
 
-    this.name().placeholder = placeholder;
+    this.viewClock.nameElem.placeholder = placeholder;
   }
 
   showDate() {
@@ -25,14 +24,14 @@ export default class Clock {
     const format = this.getFormat();
 
     const currentDate = this.date.toLocaleDateString(format, options);
-    this.pageDate().textContent = currentDate;
+    this.viewClock.dateElem.textContent = currentDate;
   }
 
   showTime() {
     const date = new Date();
     const format = this.getFormat();
     const currentTime = date.toLocaleTimeString(format);
-    this.time().textContent = currentTime;
+    this.viewClock.timeElem.textContent = currentTime;
     setTimeout(this.showTime.bind(this), 1000);
   }
 
@@ -52,7 +51,7 @@ export default class Clock {
   
   showGreeting() {
     const timeOfDay = this.getTimeOfDay();
-    this.greeting().textContent = this.language === 'ru' ?
+    this.viewClock.greetingElem.textContent = this.language === 'ru' ?
     ru.translation.time[timeOfDay] :
     eng.translation.time[timeOfDay];
   }
@@ -60,7 +59,6 @@ export default class Clock {
   setLanguage(language) {
     this.language = language;
   }
-  
   
   render() {
     this.showDate();

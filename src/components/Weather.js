@@ -10,7 +10,6 @@ class Weather {
       getWeatherData: this.getWeatherData.bind(this),
     });
     this.data = {};
-    // window.addEventListener('DOMContentLoaded', this.getWeatherData.bind(this));
   }
 
   async getWeatherData(event) {
