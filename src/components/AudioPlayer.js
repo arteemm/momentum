@@ -1,84 +1,83 @@
 import playList from '../data/playList';
-import { viewPlayList } from '../View';
+import { ViewAudioPlayer } from '../View';
 
 class AudioPlayer {
   constructor() {
-    viewPlayList();
+    this.viewAudioPlayer = new ViewAudioPlayer({      
+      playPrev: this.playPrev.bind(this),
+      playNext: this.playNext.bind(this),
+      playAudio: this.playAudio.bind(this),
+      changeVolume: this.audioVolume.bind(this),
+      toggleVolume: this.toggleVolume.bind(this),
+      setPlayNum: this.setPlayNum.bind(this),
+      setAudioLink: this.setAudioLink.bind(this),
+      getPlayNum: this.getPlayNum.bind(this),
+      setIsPlay: this.setIsPlay.bind(this),
+    });
+
     this.isPlay = false;
     this.isVolume = true;
+    this.memoryVolume = 0;
     this.playNum = 0;
     this.audio = new Audio();
     this.audio.src = playList[this.playNum].src;
     this.audio.ontimeupdate = this.progressUpdate.bind(this);
-    
-    this.playAudioButton = () => document.querySelector('.play');
-    this.playNextButton = () => document.querySelector('.play-next');
-    this.playPrevButton = () => document.querySelector('.play-prev');
-    this.playAudioButton().addEventListener('click', this.playAudio.bind(this));
-    this.playNextButton().addEventListener('click', this.playNext.bind(this));
-    this.playPrevButton().addEventListener('click', this.playPrev.bind(this));
-    this.itemsPlay = () => document.querySelectorAll('.item-play');
-    this.track = () => document.querySelector('.progress-text');
-    this.track().textContent = playList[this.playNum].title;
-    this.audioProgress = () => document.querySelector('.audio-progress');
-    this.audioDuration = () => document.querySelector('.audio-duration');
-    this.audioProgress().onclick = this.audioRewind.bind(this);
-    this.currentTimeView = () => document.querySelector('.current-time');
-    this.playItems = () => document.querySelectorAll('.play-item');
-    this.addListeners();
-    this.volumeProgress = () => document.querySelector('.volume-progress');
-    this.volumeButton = () => document.querySelector('.volume');
-    this.volumeProgress().oninput = this.audioVolume.bind(this);
-    this.volumeButton().addEventListener('click', this.toggleVolume.bind(this));
+
+    this.viewAudioPlayer.progressText.textContent = playList[this.playNum].title;
+    this.viewAudioPlayer.audioProgress.onclick = this.audioRewind.bind(this);
+  }
+
+  setPlayNum(playNum) {
+    this.playNum = playNum;
+  }
+
+  getPlayNum = () => this.playNum;
+
+  setIsPlay(isPlay) {
+    this.isPlay = isPlay;
   }
 
   playAudio() {
     if (!this.isPlay) {
       this.isPlay = true;
       this.audio.loadeddata = this.audio.play();
-      this.itemsPlay()[this.playNum].style.backgroundImage = 'url("./assets/svg/pause-small.svg")';
     } else {
       this.isPlay = false;
       this.audio.pause();
-      this.itemsPlay()[this.playNum].style.backgroundImage = 'url("./assets/svg/play-smal.svg")';
     }
-    this.toggleBtn();
-    this.track().textContent = playList[this.playNum].title;
+    this.viewAudioPlayer.progressText.textContent = playList[this.playNum].title;
+    this.changePlayIcons();
   }
 
-  getAudioLink() {
+  changePlayIcons() {
+    const smallIconsList = document.querySelectorAll('.item-play');
+    smallIconsList.forEach(item => item.classList.remove('item-play_active'));
+
+    if (this.isPlay) {
+      this.viewAudioPlayer.playButton.classList.add('pause');
+      smallIconsList[this.playNum].classList.add('item-play_active');
+    } else {
+      this.viewAudioPlayer.playButton.classList.remove('pause');
+      smallIconsList[this.playNum].classList.remove('item-play_active');
+    }
+  }
+
+  setAudioLink() {
     this.audio.src = playList[this.playNum].src;
   }
 
   audioToggle() {
     this.audio.currentTime = 0;
-    this.getAudioLink();
-    if (!this.isPlay) {
-      this.playAudio();
-    } else {
+    this.setAudioLink();
+    if (this.isPlay) {
       this.isPlay = false;
-      this.playAudio();
     }
-  }
-
-  toggleBtn() {
-    if (!this.isPlay) {
-      this.playAudioButton().classList.remove('pause');
-    } else {
-      this.playAudioButton().classList.add('pause');
-    }
-  }
-
-  togglePlayIcon() {
-    this.itemsPlay()[this.playNum].style.backgroundImage = 'url("./assets/svg/play-smal.svg")';
+    this.playAudio();
   }
 
   playNext() {
     if(this.playNum === 3) {
-      this.togglePlayIcon();
       this.playNum = -1;
-    } else {
-      this.togglePlayIcon();
     }
     this.playNum += 1;
     this.audioToggle();
@@ -86,94 +85,81 @@ class AudioPlayer {
 
   playPrev() {
     if(this.playNum === 0) {
-      this.togglePlayIcon();
       this.playNum = 4;
-    } else {
-      this.togglePlayIcon();
     }
     this.playNum -= 1;
     this.audioToggle();
   }
 
-    progressUpdate() {
+  getDurationAudio(duration) {
+    const durationMinutes = `${Math.floor(duration / 60) || '00'}`.padStart(2, 0);
+    let durationSeconds = Math.trunc(duration) || '00';
+    while (durationSeconds >= 60) {
+      durationSeconds -= 60;
+    }
+    return [durationMinutes, `${Math.round(durationSeconds)}`.padStart(2, 0)];
+  }
+
+  progressUpdate() {
     const { duration } = this.audio;
     const { currentTime } = this.audio;
-    this.audioProgress().value = (100 * currentTime) / duration || 0;
-    this.audioDuration().textContent = Math.round(duration) || '00';
-    this.currentTimeView().textContent = Math.round(currentTime).toString().padStart(2, '0');
+    this.viewAudioPlayer.audioProgress.value = (100 * currentTime) / duration || 0;
+    const [durationMinutes, durationSeconds] = this.getDurationAudio(duration);
+    this.viewAudioPlayer.audioDuration.textContent = `${durationMinutes}:${durationSeconds}`;
+    const [currentTimeMinutes, currentTimeSeconds] = this.getDurationAudio(currentTime);
+    this.viewAudioPlayer.currentTime.textContent = `${currentTimeMinutes}:${currentTimeSeconds}`;
     if (currentTime === duration) {
       this.playNext();
     }
   }
 
   audioRewind(event) {
-    const width = this.audioProgress().offsetWidth;
+    const width = this.viewAudioPlayer.audioProgress.offsetWidth;
     const { offsetX } = event;
     this.value = (100 * offsetX) / width;
     this.audio.pause();
     this.audio.currentTime = this.audio.duration * (offsetX / width);
-    if(!this.isPlay) {
-      this.playAudio();
-    } else {
+    if(this.isPlay) {
       this.isPlay = false;
-      this.playAudio();
     }
-  }
-
-  addListeners() {
-    this.playItems().forEach((item, index) => {
-      item.addEventListener('click', () => {
-        this.togglePlayIcon();
-        if (this.isPlay) {
-
-          if (index === this.playNum) {
-            this.isPlay = false;
-            this.audio.pause();
-          } else {
-            this.playNum = index;
-            this.getAudioLink();
-            this.isPlay = false;
-            this.audio.currentTime = 0;
-            this.playAudio();
-          }
-
-        } else if (index === this.playNum && !this.Play) {
-          this.playAudio();
-          this.toggleSmallPause();
-        } else {
-          this.playNum = index;
-          this.getAudioLink();
-          this.audio.currentTime = 0;
-          this.playAudio();
-          this.toggleSmallPause();
-        }
-      });
-    });
-  }
-
-
-  toggleSmallPause() {
-    if (!this.isPlay) {
-      this.itemsPlay()[this.playNum].style.backgroundImage = 'url("./assets/svg/pause-small.svg")';
-    }
+    this.playAudio();
   }
 
   audioVolume(e) {
     this.audio.volume = e.target.value / 100;
+    if (!this.isVolume) {
+      this.isVolume = true;
+      this.viewAudioPlayer.volume.classList.remove('mute');
+    }
   }
 
   toggleVolume() {
     if (this.isVolume) {
       this.isVolume = false;
+      this.memoryVolume = this.audio.volume;
       this.audio.volume = 0;
-      this.volumeButton().classList.add('mute');
+      this.viewAudioPlayer.volume.classList.add('mute');
+      this.viewAudioPlayer.volumeProgress.volume = '0';
     } else {
       this.isVolume = true;
-      this.volumeButton().classList.remove('mute');
-      this.audio.volume = 0.5;
+      this.viewAudioPlayer.volume.classList.remove('mute');
+      this.audio.volume = this.memoryVolume;
+      this.viewAudioPlayer.volumeProgress.volume = this.memoryVolume;
     }
   }
 
+  render() {
+    const player = document.createElement('div');
+    player.className = 'player'
+
+    player.append(
+      this.viewAudioPlayer.createControlsContainer(),
+      this.viewAudioPlayer.createPlayerContainer(),
+      this.viewAudioPlayer.createPlayListContainer(),
+    )
+
+    return player;
+  }
 }
 
 export default AudioPlayer;

@@ -1,7 +1,6 @@
 import Clock from './Clock';
 import Background from './Background';
 import Weather from './Weather';
-import AudioPlayer from './AudioPlayer';
 import Settings from './Settings';
 import ItemList from './ItemList';
 import LanguageSubmenu from './LanguageSubmenu';
@@ -12,12 +11,14 @@ import TodoItem from './TodoItem';
 import FooterTodo from './FooterTodo';
 import Button from './Button';
 import Footer from './Footer';
+import Header from './Header';
+import Container from './Container';
+import Input from './Input';
 
 export {
   Clock,
   Weather,
   Background,
-  AudioPlayer,
   Settings,
   ItemList,
   LanguageSubmenu,
@@ -28,4 +29,7 @@ export {
   FooterTodo,
   Button,
   Footer,
+  Header,
+  Container,
+  Input,
 };

@@ -1,6 +1,6 @@
 import viewWeather from './viewWeather';
-import viewPlayList from './viewAudio';
+import ViewAudioPlayer from './viewAudio';
 import ViewSettings from './viewSettings';
 import ViewTodoItem from './ViewTodoItem';
 
-export { viewWeather, viewPlayList, ViewSettings, ViewTodoItem };
+export { viewWeather, ViewAudioPlayer, ViewSettings, ViewTodoItem };

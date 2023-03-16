@@ -1,14 +1,14 @@
-import { Clock, Weather, Background, AudioPlayer, Footer } from '../components';
+import { Clock, Weather, Background, Footer, Header } from '../components';
 
 class App {
   constructor() {
     this.clock = new Clock();
-    this.weather = new Weather();
+    // this.weather = new Weather();
     this.background = new Background({
       timeOfDay: this.clock.getTimeOfDay(),
       checkResponse: this.getCheckResponse.bind(this),
     });
-    this.audioPlayer = new AudioPlayer();
+    this.header = new Header();
     this.footer = new Footer({
       changeToGit: this.background.getImageLocal.bind(this.background),
       changeToUnsplash: this.background.getImageUnsplash.bind(this.background),
@@ -31,12 +31,13 @@ class App {
 
   render() {
     this.clock.render();
-    this.weather.render();
+    // this.weather.render();
     this.background.render();
 
     const body = document.querySelector('body');
 
     body.append(
+      this.header.render(),
       this.footer.render(),
     );
 

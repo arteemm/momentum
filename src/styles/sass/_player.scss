@@ -99,7 +99,9 @@
   cursor: pointer;
 }
 
-
+.item-play_active {
+  background-image: url("../assets/svg/pause-small.svg");
+}
 
 .volume {
   display: block;
