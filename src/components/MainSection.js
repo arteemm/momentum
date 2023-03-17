@@ -6,7 +6,6 @@ import Button from './Button';
 class MainSection {
   constructor(props) {
     this.clock = new Clock(props);
-    this.clock.render();
     this.buttonNext = new Button(this.createButtonNext()).render();
     this.buttonPrev = new Button(this.createButtonPrev()).render();
 
@@ -19,7 +18,7 @@ class MainSection {
       label: '',
       type: 'button',
       className: 'slide-prev slider-icon',
-      onClick: () => this.getSlidePrev()(),
+      onClick: () => this.getSlidePrev(),
     }
   }
 
@@ -28,7 +27,7 @@ class MainSection {
       label: '',
       type: 'button',
       className: 'slide-next slider-icon',
-      onClick: () => this.getSlideNext()(),
+      onClick: () => this.getSlideNext(),
     }
   }
 

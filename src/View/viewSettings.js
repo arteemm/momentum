@@ -3,17 +3,17 @@ import { ru, eng } from '../locales';
 
 class ViewSettings {
   constructor(props) {
-    this.languageSubmenu = new LanguageSubmenu(props).render();
+    this.languageSubmenu = new LanguageSubmenu(props);
     this.tagsSubmenu = new TagsSubmenu(props);
     this.sourceSubmenu = new SourceSubmenu({
       ...props,
       tagSubmenuInput: this.tagsSubmenu.input,
-    }).render();
+    });
     this.hiddenSubmenu = new HiddenSubmenu();
   
     this.submenu = document.createElement('div');
     this.submenu.className = ('settings__submenu');
-    this.currentSubmenu = this.languageSubmenu;
+    this.currentSubmenu = this.languageSubmenu.render();
 
     this.submenu.append(this.currentSubmenu);
     
@@ -46,7 +46,7 @@ class ViewSettings {
     return {
       class: 'settings__item',
       onClick: () => {
-        this.currentSubmenu = this.languageSubmenu;
+        this.currentSubmenu = this.languageSubmenu.render();
         this.changeSubmenu();
       }
     };
@@ -56,7 +56,7 @@ class ViewSettings {
     return {
       class: 'settings__item',
       onClick: () => {
-        this.currentSubmenu = this.sourceSubmenu;
+        this.currentSubmenu = this.sourceSubmenu.render();
         this.changeSubmenu();
       },
     };

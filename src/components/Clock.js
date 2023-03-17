@@ -4,33 +4,20 @@ import { ViewClock } from '../View';
 export default class Clock {
   constructor() {
     this.viewClock = new ViewClock();
-
-    this.language = 'ru';
     this.date = new Date();
-  }
-
-  getFormat() {
-    return this.language === 'ru' ? 'ru-GB' : 'en-US';
-  }
-
-  showPlaceholder() {
-    const placeholder = this.language === 'ru' ? '[Введите ваше имя]' : '[Enter your name]';
-
-    this.viewClock.nameElem.placeholder = placeholder;
+    this.format = 'ru-GB';
   }
 
   showDate() {
     const options = {weekday: 'long',month: 'long', day: 'numeric'};
-    const format = this.getFormat();
 
-    const currentDate = this.date.toLocaleDateString(format, options);
+    const currentDate = this.date.toLocaleDateString(this.format, options);
     this.viewClock.dateElem.textContent = currentDate;
   }
 
   showTime() {
     const date = new Date();
-    const format = this.getFormat();
-    const currentTime = date.toLocaleTimeString(format);
+    const currentTime = date.toLocaleTimeString(this.format);
     this.viewClock.timeElem.textContent = currentTime;
     setTimeout(this.showTime.bind(this), 1000);
   }
@@ -49,21 +36,13 @@ export default class Clock {
     return timesOfDay;
   }
   
-  showGreeting() {
+  setTextItems(language) {
     const timeOfDay = this.getTimeOfDay();
-    this.viewClock.greetingElem.textContent = this.language === 'ru' ?
-    ru.translation.time[timeOfDay] :
-    eng.translation.time[timeOfDay];
-  }
-
-  setLanguage(language) {
-    this.language = language;
-  }
-  
-  render() {
+    const path = language === 'ru' ? ru.translation.time : eng.translation.time;
+    this.viewClock.greetingElem.textContent = path[timeOfDay];
+    this.viewClock.nameElem.placeholder = path.placeholder;
+    this.format = path.format;
     this.showDate();
     this.showTime();
-    this.showGreeting();
-    this.showPlaceholder();
   }
 }

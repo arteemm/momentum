@@ -8,7 +8,7 @@ class Button {
 
   render() {
     const component = document.createElement('button');
-    component.textContent = this.label;
+    component.textContent = this.label || '';
     component.type = this.type;
     component.className = this.className;
     

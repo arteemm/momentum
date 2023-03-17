@@ -4,9 +4,26 @@ class Background {
   constructor (props) {
     this.data = {};
     this.timeOfDay = props.timeOfDay;
-    this.randomNum = 0;
+    this.randomNum = this.getRandomNum();
+    this.currentSourceName = JSON.parse(localStorage.getItem('settings')).source || 'git';
     this.currentSource = this.getImageLocal;
     this.checkResponse = props.checkResponse
+  }
+
+  async setOriginallySource() {
+    if (this.currentSourceName === 'git') {
+      await this.getImageLocal();
+    }
+
+    if (this.currentSourceName === 'unsplash') {
+      await this.getImageUnsplash();
+      await this.setImageUnsplash();
+    }
+
+    if (this.currentSourceName === 'flickr') {
+      await this.getImageFlickr();
+      await this.setImageFlickr();
+    }
   }
 
   async getCurrentSource(val) {
@@ -23,16 +40,19 @@ class Background {
   }
 
   async getImageUnsplash(val = this.timeOfDay) {
+    this.currentSourceName = 'unsplash';
     this.currentSource = this.setImageUnsplash;
   
     try {
       const data = await getImage(val);
-      if (data.errors) {
+      if (data.errors ) {
         this.checkResponse()(true);
         return;
       }
       this.data = data;
-      this.checkResponse()(false);
+      if (val !== this.timeOfDay) {
+        this.checkResponse()(false);
+      }
     } catch(err) {
       console.error(err);
     }    
@@ -51,6 +71,7 @@ class Background {
   }
 
   async getImageFlickr(val = this.timeOfDay) {
+    this.currentSourceName = 'flickr';
     this.currentSource = this.setImageFlickr;
 
     try {
@@ -60,7 +81,9 @@ class Background {
         return;
       }
       this.data = data;
-      this.checkResponse()(false);
+      if (val !== this.timeOfDay) {
+        this.checkResponse()(false);
+      }
     } catch(err) {
       console.error(err);
     }
@@ -79,7 +102,7 @@ class Background {
   }
 
   getRandomNum () {
-    this.randomNum = Math.ceil(Math.random() * 20);
+    return Math.ceil(Math.random() * 20);
   }
 
   getUrl () {
@@ -88,6 +111,7 @@ class Background {
   }
  
   async getImageLocal () {
+    this.currentSourceName = 'git';
     this.currentSource = this.getImageLocal;
     const img = new Image();
     img.src = `${this.getUrl()}`;
@@ -109,11 +133,6 @@ class Background {
       this.randomNum = 21;
     }
     this.randomNum--;
-    this.currentSource();
-  }
-
-  render () {
-    this.getRandomNum();
     this.currentSource();
   }
 }

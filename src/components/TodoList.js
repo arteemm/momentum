@@ -1,6 +1,7 @@
 import FooterTodo from './FooterTodo';
 import { ViewTodoItem } from '../View';
 import Button from './Button';
+import { ru, eng } from '../locales';
 
 class TodoList {
   constructor() {
@@ -10,14 +11,16 @@ class TodoList {
     this.openTodoButton = new Button(this.createOpenTodoButton()).render();
     this.todoArr = this.getLocalStorage() || [];
     this.viewTodoItem = new ViewTodoItem(this.todoListElem);
+    this.footerTodo = new FooterTodo({
+      onSubmit: this.handleClick.bind(this),
+      clearTodoList: this.clearTodoList.bind(this),
+    });
   }
 
-  createFooter() {
-    const footer = new FooterTodo({
-      onClick: this.handleClick.bind(this),
-    }).render();
-
-    return footer;
+  setTextItems(language) {
+    const path = language === 'ru' ? ru.translation.todo : eng.translation.todo;
+    this.footerTodo.form.input.inputElement.placeholder = path.placeholder;
+    this.footerTodo.form.clearButton.textContent = path.clearTodo;
   }
 
   deleteItem(id) {
@@ -58,7 +61,7 @@ class TodoList {
 
     this.todoContainer.append(
       this.todoListElem,
-      this.createFooter(),
+      this.footerTodo.render(),
     );
 
     return this.todoContainer
@@ -79,6 +82,7 @@ class TodoList {
   }
 
   render() {
+    this.showTodoList()
     const container = document.createElement('div');
     container.className = 'todo';
   

@@ -18,6 +18,7 @@ class App {
       changeToFlickr: this.background.getImageFlickr.bind(this.background),
       setToFlickr: this.background.setImageFlickr.bind(this.background),
       currentSource: this.background.getCurrentSource.bind(this.background),
+      currentSourceName: this.background.currentSourceName,
       changeLanguage: this.changeLanguageApp.bind(this),
     });
 
@@ -25,20 +26,19 @@ class App {
   }
 
   getSlidePrev() {
-    return this.background.getSlidePrev.bind(this.background);
+    this.background.getSlidePrev();
   }
 
   getSlideNext() {
-    return this.background.getSlideNext.bind(this.background);
+    this.background.getSlideNext()
   }
-
 
   getCheckResponse() {
     return this.footer.settings.viewSettings.tagsSubmenu.checkResponse.bind(this.footer.settings.viewSettings.tagsSubmenu);
   }
 
   render() {
-    this.background.render();
+    this.background.setOriginallySource();
 
     const root = document.querySelector('.root');
 
@@ -47,20 +47,25 @@ class App {
       this.mainSection.render(),
       this.footer.render(),
     );
-
-    this.changeLanguageApp('ru');
+    
+    const language = JSON.parse(localStorage.getItem('settings')).language || 'ru';
+    this.changeLanguageApp(language);
   }
 
   saveSettings() {
-    // this.name = () => document.querySelector('.name');
-    // this.name().value = localStorage.getItem('name') || '';
-    // this.name().addEventListener('change', (e) => localStorage.setItem('name', e.target.value));
-    localStorage.setItem('city', this.weather.city);
+    const name = this.mainSection.clock.viewClock.nameElem.value;
+    const cityWeather = this.header.weather.city
+
     const appSettings = {
-      // language: this.footer.settings.viewSettings.language,
-      source: this.background.currentSource.toString(),
+      language: this.footer.settings.viewSettings.languageSubmenu.language,
+      source: this.background.currentSourceName,
+      hiddenElements: this.footer.settings.viewSettings.hiddenSubmenu.hiddenElements,
     };
+    const todoList = this.footer.todoList.todoArr;
+    localStorage.setItem('name', name);
+    localStorage.setItem('city', cityWeather);
     localStorage.setItem('settings', JSON.stringify(appSettings));
+    localStorage.setItem('todoList', JSON.stringify(todoList));
   }
 
   changeLanguageApp(language) {
@@ -70,6 +75,8 @@ class App {
     this.footer.settings.viewSettings.tagsSubmenu.setTextItems(language);
     this.header.weather.viewWeather.setTextItems(language);
     this.header.weather.getWeatherData();
+    this.mainSection.clock.setTextItems(language);
+    this.footer.todoList.setTextItems(language);
   }
 }
 

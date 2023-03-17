@@ -3,14 +3,7 @@ import FormTodo from './FormTodo';
 class FooterTodo {
   constructor(props) {
     this.onClick = props.onClick;
-  }
-
-  createForm() {
-    const form = new FormTodo({
-      onSubmit: this.onClick,
-    }).render();
-
-    return form;
+    this.form = new FormTodo(props);
   }
 
   render() {
@@ -18,7 +11,7 @@ class FooterTodo {
     component.className = 'todo__footer';
 
     component.append(
-      this.createForm(),
+      this.form.render(),
     );
 
     return component;

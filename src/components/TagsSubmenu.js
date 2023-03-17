@@ -4,6 +4,7 @@ import Input from './Input';
 class TagsSubmenu {
   constructor(props) {
     this.currentSource = props.currentSource;
+    this.currentSourceName = props.currentSourceName;
     this.input = new Input(this.createInputItem());
     this.errorMessage = document.createElement('p');
     this.label = document.createElement('label');
@@ -40,7 +41,7 @@ class TagsSubmenu {
       className: 'search-bar__input',
       id: 'search',
       value: '',
-      disabled: true,
+      disabled: this.currentSourceName === 'git',
     };
   }
 

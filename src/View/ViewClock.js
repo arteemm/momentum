@@ -13,9 +13,11 @@ class ViewClock {
   }
 
   createNameInput() {
+    const name = localStorage.getItem('name') || '';
     return {
       type: 'text',
       className: 'name',
+      value: name,
     }
   }
 

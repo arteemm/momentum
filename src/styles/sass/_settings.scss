@@ -8,12 +8,15 @@
     height: 200px;
     background-color: #574f4f;
     z-index: 1;
-    bottom: -530px;
+    bottom: 44px;
+    opacity: 0;
     display: flex;
+    pointer-events: none;
   }
 
   &__container_active {
-    bottom: 0;
+    opacity: 1;
+    pointer-events: painted;
   }
 
   &__list {

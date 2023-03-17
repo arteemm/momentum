@@ -2,7 +2,7 @@ import ItemList from './ItemList';
 
 class LanguageSubmenu {
   constructor(props) {
-    this.language = 'ru';
+    this.language = JSON.parse(localStorage.getItem('settings')).language || 'ru';
     this.changeLanguageApp = props.changeLanguage;
   }
 

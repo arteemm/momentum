@@ -10,8 +10,6 @@
 }
 
 body {
-  min-width: 480px;
-  min-height: 100vh;
   font-family: 'Arial', sans-serif;
   font-size: 16px;
   color: #fff;
@@ -19,6 +17,13 @@ body {
   background: center/cover, rgba(0, 0, 0, 0.5);
   background-blend-mode: multiply;
   transition: background-image 1s ease-in-out;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.root {
+  min-width: 480px;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

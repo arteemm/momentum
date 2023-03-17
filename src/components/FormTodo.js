@@ -4,9 +4,14 @@ import Input from './Input';
 class FormTodo {
   constructor(props) {
     this.onSubmit = props.onSubmit;
+    this.clearTodoList = props.clearTodoList;
     this.inputValue = '';
     this.onChange = (e) => this.setInputValue(e.target.value);
-    this.clearInput = null;
+    this.input = new Input(this.createInput());
+    this.clearInput = () => {
+      this.input.inputElement.value = '';
+    }
+    this.clearButton = new Button(this.createButton()).render();
   }
 
   setInputValue(value) {
@@ -14,26 +19,19 @@ class FormTodo {
   }
 
   createInput() {
-    const input = new Input({
+    return {
       label: 'Add',
       type: 'text',
-      placeholder: 'Add new task',
       onChange: this.onChange,
-     }).render();
-
-    this.clearInput = () => { input.value = ''; };
-
-    return input;
+     }
   }
 
   createButton() {
-    const button = new Button({
-      label: 'Add',
-      type: 'submit',
-    }).render();
-    button.classList.add('control');
-    
-    return button;
+    return {
+      type: 'button',
+      className: 'control',
+      onClick: this.clearTodoList,
+    };
   }
 
   handleSubmit(e) {
@@ -50,8 +48,8 @@ class FormTodo {
     component.className = 'header__form form';
 
     component.append(
-      this.createInput(),
-      this.createButton(),
+      this.input.render(),
+      this.clearButton,
     );
 
     
