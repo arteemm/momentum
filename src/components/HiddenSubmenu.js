@@ -17,7 +17,7 @@ class HiddenSubmenu {
     this.greetingHiddenItem = new ItemList(this.createGreetingHiddenItem());
     this.quoteHiddenItem = new ItemList(this.createQuoteHiddenItem());
 
-    this.hiddenElements = JSON.parse(localStorage.getItem('settings')).hiddenElements || [];
+    this.hiddenElements = JSON.parse(localStorage.getItem('settings'))?.hiddenElements || [];
     window.addEventListener('DOMContentLoaded', this.setHiddenElementsOriginally.bind(this));
   }
 

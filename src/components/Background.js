@@ -5,7 +5,7 @@ class Background {
     this.data = {};
     this.timeOfDay = props.timeOfDay;
     this.randomNum = this.getRandomNum();
-    this.currentSourceName = JSON.parse(localStorage.getItem('settings')).source || 'git';
+    this.currentSourceName = JSON.parse(localStorage.getItem('settings'))?.source || 'git';
     this.currentSource = this.getImageLocal;
     this.checkResponse = props.checkResponse
   }
