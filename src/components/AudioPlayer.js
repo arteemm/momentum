@@ -1,5 +1,5 @@
 import playList from '../data/playList';
-import { ViewAudioPlayer } from '../View';
+import ViewAudioPlayer from '../View/ViewAudio';
 
 class AudioPlayer {
   constructor() {

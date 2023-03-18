@@ -1,4 +1,4 @@
-import { ViewSettings } from '../View';
+import ViewSettings from '../View/ViewSettings';
 import Button from './Button';
 
 class Settings {

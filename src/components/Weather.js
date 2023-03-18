@@ -1,5 +1,5 @@
 import { getWeather } from '../api';
-import { ViewWeather } from '../View';
+import ViewWeather from '../View/ViewWeather';
 import Container from './Container';
 
 class Weather {
