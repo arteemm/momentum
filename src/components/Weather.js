@@ -1,5 +1,5 @@
 import { getWeather } from '../api';
-import ViewWeather from '../View/ViewWeather';
+import { ViewWeather } from '../View';
 import Container from './Container';
 
 class Weather {
@@ -27,7 +27,7 @@ class Weather {
 
   render() {
     return new Container(
-      'weather',
+      'header__weather weather',
       this.viewWeather.searchCityInput,
       this.viewWeather.weatherIcon,
       this.viewWeather.error,

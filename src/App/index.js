@@ -48,7 +48,7 @@ class App {
       this.footer.render(),
     );
     
-    const language = JSON.parse(localStorage.getItem('settings')).language || 'ru';
+    const language = JSON.parse(localStorage.getItem('settings'))?.language || 'ru';
     this.changeLanguageApp(language);
   }
 

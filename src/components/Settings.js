@@ -1,4 +1,4 @@
-import ViewSettings from '../View/ViewSettings';
+import { ViewSettings } from '../View';
 import Button from './Button';
 
 class Settings {
@@ -8,7 +8,7 @@ class Settings {
     this.settingsButton = new Button({
       label: '',
       type: 'button',
-      className: 'settings__button',
+      className: 'settings__button icon button',
       onClick: () => this.showSettings(),
     }).render();
     this.settingsContainer = document.createElement('div');
@@ -32,7 +32,7 @@ class Settings {
 
   render() {
     const settings = document.createElement('div');
-    settings.className = 'settings';
+    settings.className = 'footer__settings settings';
 
     settings.append(
       this.settingsButton,

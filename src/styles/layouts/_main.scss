@@ -1,0 +1,95 @@
+.main {
+  position: relative;
+  @extend %flexColumn;
+  justify-content: center;
+  align-items: center;
+  @include size (100%, 40vh);
+  min-height: 260px;  
+  padding: 20px;
+
+  &__icon {
+    position: absolute;
+    top: 50%;
+    margin-top: -16px;
+    @include size (32px);
+
+    &_prev {
+      left: 20px;
+      background-image: url("../assets/svg/slider-prev.svg");
+    }
+
+    &_next {
+      right: 20px;
+      background-image: url("../assets/svg/slider-next.svg");
+    }
+  }
+
+  &__time {
+    min-height: 124px;
+    margin-bottom: 10px;
+    font-family: 'Arial-MT';
+    font-size: 10rem;
+    letter-spacing: -4px;  
+  }
+
+  &__date {
+    min-height: 28px;
+    font-size: 2.4rem;
+    margin-bottom: 20px;
+  }
+
+  &__container {
+    @extend %flexSpace-between;
+    justify-content: stretch;
+    min-height: 48px;
+    width: 100vw;
+    font-size: 4rem;
+  }
+
+  &__greeting {
+    flex: 1;  
+    padding: 10px;
+    text-align: right;
+  }
+
+  &__name {
+    flex: 1;
+    max-width: 50%;
+    padding: 10px;
+    font-size: 4rem;
+    text-align: left;
+    color: $text-color;
+    background-color: transparent;
+    border: 0;
+    outline: 0;
+
+    &::placeholder {
+      color: $text-color;
+      opacity: .6;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .main {
+
+    &__time {
+      min-height: 80px;
+      font-size: 7.2rem;    
+    }
+
+    &__container {
+      min-height: 40px;
+      font-size: 3.2rem;
+    }
+
+    &__greeting {
+      padding: 5px;
+    }
+  
+    &__name {
+      font-size: 3.2rem;
+      padding: 5px;
+    }
+  }
+}

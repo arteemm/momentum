@@ -29,7 +29,7 @@ class FormTodo {
   createButton() {
     return {
       type: 'button',
-      className: 'control',
+      className: 'todo__button-clear button',
       onClick: this.clearTodoList,
     };
   }
@@ -45,7 +45,7 @@ class FormTodo {
 
   render() {
     const component = document.createElement('form');
-    component.className = 'header__form form';
+    component.className = 'todo__form';
 
     component.append(
       this.input.render(),

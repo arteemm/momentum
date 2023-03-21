@@ -14,6 +14,7 @@ class TagsSubmenu {
     const path = language === 'ru' ? ru.translation.submenu : eng.translation.submenu;
     this.label.textContent = path.tagDescription;
     this.errorMessage = path.errorMessage;
+    this.input.placeholder = path.tagPlaceholder;
   }
 
   createDescription() {
@@ -61,6 +62,7 @@ class TagsSubmenu {
 
   render() {
     const container = document.createElement('div');
+    container.className = 'settings__sub-search';
     container.onsubmit = this.handleSubmit;
 
     container.append(

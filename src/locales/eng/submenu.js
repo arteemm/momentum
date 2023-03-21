@@ -7,4 +7,5 @@ export default {
   hiddenDate: 'Hide the date',
   hiddenGreeting: 'Hide the greeting',
   hiddenQuote: 'Hide quotes',
+  tagPlaceholder: 'Enter a tag',
 };

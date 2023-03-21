@@ -3,4 +3,5 @@
   background-color: transparent;
   border: none;
   cursor: pointer;
+  @extend %transitionMiddle;
 }

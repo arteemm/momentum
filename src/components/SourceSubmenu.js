@@ -8,19 +8,41 @@ class SourceSubmenu {
     this.getFlickrSourse = props.changeToFlickr;
     this.setFlickrSourse = props.setToFlickr;
     this.tagSubmenuInput = props.tagSubmenuInput;
+    this.changeActiveItem = props.changeActiveItem;
+
+    this.switchGitItem = new ItemList(this.createSwitchGitItem()).render();
+    this.switchUnsplashItem = new ItemList(this.createSwitchUnsplashItem()).render();
+    this.switchFlickrItem = new ItemList(this.createSwitchFlickrItem()).render();
+  }
+
+  setActiveElementsOriginally() {
+    const currentSource = JSON.parse(localStorage.getItem('settings'))?.source || 'git';
+    const classNameActive = 'settings__subitem_active';
+    const classNameDisable = 'settings__subitem_disabled';
+    switch (currentSource) {
+      case 'git':
+        this.switchGitItem.classList.add(classNameActive, classNameDisable);
+      break;
+      case 'unsplash':
+        this.switchUnsplashItem.classList.add(classNameActive, classNameDisable);
+      break;
+      case 'flickr':
+        this.switchFlickrItem.classList.add(classNameActive, classNameDisable);
+      break;
+      default: break;
+    }
   }
 
   createSwitchGitItem() {
-    const item = new ItemList({
+    return {
       label: 'github',
       class: 'settings__subitem',
       onClick: () => {
         this.changeGitSource();
         this.tagSubmenuInput.disabled = true;
+        this.changeActiveItem(this.switchGitItem);
       },
-    }).render();
-
-    return item;
+    };
   }
 
   async changeUnsplashSource() {
@@ -30,15 +52,14 @@ class SourceSubmenu {
   }
 
   createSwitchUnsplashItem() {
-    const item = new ItemList({
+    return {
       label: 'Unsplash',
       class: 'settings__subitem',
       onClick: () => {
         this.changeUnsplashSource();
+        this.changeActiveItem(this.switchUnsplashItem);
       }
-    }).render();
-
-    return item;
+    };
   }
 
   async changeFlickrSource() {
@@ -48,24 +69,24 @@ class SourceSubmenu {
   }
 
   createSwitchFlickrItem() {
-    const item = new ItemList({
+    return {
       label: 'Flickr',
       class: 'settings__subitem',
       onClick: () => {
         this.changeFlickrSource();
+        this.changeActiveItem(this.switchFlickrItem);
       }
-    }).render();
-
-    return item;
+    };
   }
 
   render() {
     const container = document.createElement('ul');
+    container.className = 'settings__subList';
 
     container.append(
-      this.createSwitchGitItem(),
-      this.createSwitchUnsplashItem(),
-      this.createSwitchFlickrItem()
+      this.switchGitItem,
+      this.switchUnsplashItem,
+      this.switchFlickrItem,
     );
 
     return container;

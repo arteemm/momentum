@@ -10,17 +10,17 @@ class ViewWeather {
     this.searchCityInput = new Input(this.createSearchCityInput()).render();
 
     this.wind = document.createElement('div');
-    this.wind.className = 'wind';
+    this.wind.className = 'weather__wind';
     this.humidity = document.createElement('div');
-    this.humidity.className = 'humidity';
+    this.humidity.className = 'weather__humidity';
     this.temperature = document.createElement('span');
-    this.temperature.className = 'temperature';
+    this.temperature.className = 'weather__temperature';
     this.weatherDescription = document.createElement('span');
-    this.weatherDescription.className = 'weather-description';
+    this.weatherDescription.className = 'weather__description';
     this.error = document.createElement('div');
-    this.error.className ='weather-error hidden';
+    this.error.className ='weather__error hidden';
     this.weatherIcon = document.createElement('i');
-    this.weatherIcon.className ='weather-icon owf';
+    this.weatherIcon.className ='weather__icon owf';
   }
 
   setTextItems(language) {
@@ -30,7 +30,7 @@ class ViewWeather {
   createSearchCityInput() {
     return {
       type: 'text',
-      className: 'city',
+      className: 'weather__city',
       value: this.city,
       onChange: this.getWeatherData,
     }
@@ -38,7 +38,7 @@ class ViewWeather {
 
   createDescriptionContainer() {
     return new Container(
-      'description-container',
+      'weather__container',
       this.temperature,
       this.weatherDescription,
     ).render();
@@ -75,7 +75,8 @@ class ViewWeather {
     this.temperature.textContent = `${data.main.temp}°C`;
     this.weatherDescription.textContent = data.weather[0].description;
     this.wind.textContent = `${path.speed}: ${data.wind.speed} ${path.unit}`;
-    this.humidity.textContent = `${path.humidity}: ${data.main.humidity}%`; 
+    this.humidity.textContent = `${path.humidity}: ${data.main.humidity}%`;
+    this.searchCityInput.placeholder =path.placeholder;
   }
 }
 

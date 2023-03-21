@@ -29,7 +29,7 @@ class ViewAudioPlayer {
     return {
       label: '',
       type: 'button',
-      className: 'play-prev player-icon',
+      className: 'player__button-prev button icon player-icon',
       onClick: this.playPrev,
     }
   }
@@ -38,7 +38,7 @@ class ViewAudioPlayer {
     return {
       label: '',
       type: 'button',
-      className: 'play player-icon',
+      className: 'player__button-play button icon player-icon',
       onClick: this.playAudio,
     }
   }
@@ -47,14 +47,14 @@ class ViewAudioPlayer {
     return {
       label: '',
       type: 'button',
-      className: 'play-next player-icon',
+      className: 'player__button-next button icon player-icon',
       onClick: this.playNext,
     }
   }
 
   createControlsContainer() {
     return new Container(
-      'player-controls',
+      'player__controls',
       this.prevButton,
       this.playButton,
       this.nextButton,
@@ -62,15 +62,13 @@ class ViewAudioPlayer {
   }
 
   createPlayerTimeContainer() {
-    this.currentTime.className = 'current-time';
     this.currentTime.textContent = '00:00';
-    this.audioDuration.className = 'audio-duration';
     this.audioDuration.textContent = '00:00';
     const slash = document.createElement('span');
     slash.textContent = '/';
 
      return new Container(
-      'player-time',
+      'player__duration-container',
       this.currentTime,
       slash,
       this.audioDuration,
@@ -78,21 +76,28 @@ class ViewAudioPlayer {
   }
 
   createPlayerProgressContainer() {
-    this.audioProgress.className = 'progress-text';
-    this.progressText.className = 'audio-progress';
+    this.audioProgress.className = 'player__audio-progress';
     this.audioProgress.max = '100';
     this.audioProgress.value = '0';
 
     return new Container(
-      'player-progress',
+      'player__progress',
       this.progressText,
       this.audioProgress,
     ).render();
   }
 
+  createVolumeContainer() {
+    return new Container(
+      'player__volume-container',
+      this.volume,
+      this.volumeProgress,
+    ).render();
+  }
+
   createVolumeRange() {
     return {
-      className: 'volume-progress',
+      className: 'player__volume-progress',
       type: 'range',
       max: '100',
       min: '0',
@@ -106,30 +111,29 @@ class ViewAudioPlayer {
     return {
       label: '',
       type: 'button',
-      className: 'volume',
+      className: 'player__button-volume button icon',
       onClick: this.toggleVolume,
     }
   }
 
   createPlayerContainer() {
     return new Container(
-      'prayer-container',
+      'player__container',
       this.createPlayerTimeContainer(),
       this.createPlayerProgressContainer(),
-      this.volume,
-      this.volumeProgress,
+      this.createVolumeContainer(),
     ).render();
   }
 
   createPlayListContainer() {
     const playListContainer = document.createElement('ul');
-    playListContainer.className = 'play-list';
+    playListContainer.className = 'player__list';
 
     playList.forEach((item, index) => {
           const li = document.createElement('li');
           const span = document.createElement('span');
-          li.classList.add('play-item');
-          span.classList.add('item-play');
+          li.classList.add('player__item');
+          span.classList.add('player__item-icon', 'icon');
           li.textContent = playList[index].title;
 
           li.addEventListener('click', () => {

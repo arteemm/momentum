@@ -6,9 +6,9 @@ class Quote {
   constructor() {
     this.getRandomNumber = (max) => Math.floor(Math.random() * max);
     this.quoteText = document.createElement('p');
-    this.quoteText.className = 'quote';
+    this.quoteText.className = 'footer__quote';
     this.author = document.createElement('p');
-    this.author.className = 'author';
+    this.author.className = 'footer__author';
   }
 
   async getQuoteDataEn() {
@@ -30,7 +30,7 @@ class Quote {
     const button = new Button({
       label: '',
       type: 'button',
-      className: 'change-quote',
+      className: 'footer__change-quote icon button',
       onClick: () => this.getTypeQuote()(),
     }).render();
   
@@ -44,7 +44,7 @@ class Quote {
 
   render() {
     const container = document.createElement('div');
-    container.className = 'quote__container';
+    container.className = 'footer__container';
 
     container.append(
       this.createChangeQuoteButton(),

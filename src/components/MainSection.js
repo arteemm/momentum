@@ -17,7 +17,7 @@ class MainSection {
     return {
       label: '',
       type: 'button',
-      className: 'slide-prev slider-icon',
+      className: 'main__icon_prev main__icon icon button',
       onClick: () => this.getSlidePrev(),
     }
   }
@@ -26,14 +26,14 @@ class MainSection {
     return {
       label: '',
       type: 'button',
-      className: 'slide-next slider-icon',
+      className: 'main__icon_next main__icon icon button',
       onClick: () => this.getSlideNext(),
     }
   }
 
   createSliderButtonContainer() {
     return new Container(
-      'slider-icons',
+      'main__icons',
       this.buttonPrev,
       this.buttonNext,
     ).render();

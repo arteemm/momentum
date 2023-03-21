@@ -3,4 +3,5 @@ export default {
   unit: 'm/c',
   humidity: 'Humidity',
   error: 'City not found',
+  placeholder: 'Enter city',
 };

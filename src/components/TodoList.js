@@ -84,7 +84,7 @@ class TodoList {
   render() {
     this.showTodoList()
     const container = document.createElement('div');
-    container.className = 'todo';
+    container.className = 'footer__todo todo';
   
     container.append(
       this.openTodoButton,

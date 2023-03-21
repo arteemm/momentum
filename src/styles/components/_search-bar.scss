@@ -1,0 +1,21 @@
+.search-bar{
+
+  &__input {
+    border: none;
+    outline: none;
+    border-bottom: 1px solid $settings-color;
+
+    &_invalid, &_invalid:focus{
+      border: solid 1px red;
+      outline-color: red;
+    }
+
+    &::placeholder {
+      color: $settings-color;
+    }
+  }
+
+  &__message {
+    color: $settings-error-color;
+  }
+}

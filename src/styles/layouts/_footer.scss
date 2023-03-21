@@ -1,0 +1,30 @@
+
+.footer {
+  @extend %flexSpace-between;
+  align-items: flex-end;
+  padding: 20px;
+
+  &__container {
+    @extend %flexColumn;
+    align-items: center
+  }
+
+  &__change-quote {
+    @include size (32px);
+    margin-bottom: 30px;
+    background-image: url("../assets/svg/reload.svg");
+
+    &:active {
+      transform: rotate(90deg);
+    }
+  }
+
+  &__quote {
+    min-height: 32px;
+    margin-bottom: 5px;
+  }
+
+  &__author {
+    min-height: 20px;
+  }
+}

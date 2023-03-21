@@ -4,40 +4,57 @@ class LanguageSubmenu {
   constructor(props) {
     this.language = JSON.parse(localStorage.getItem('settings'))?.language || 'ru';
     this.changeLanguageApp = props.changeLanguage;
+    this.changeActiveItem = props.changeActiveItem;
+
+    this.switchRussianItem = new ItemList(this.createSwitchRussianItem()).render();
+    this.switchEnglishItem = new ItemList(this.createSwitchEnglishItem()).render();
+  }
+
+  setActiveElementsOriginally() {
+    const classNameActive = 'settings__subitem_active';
+    const classNameDisable = 'settings__subitem_disabled';
+    switch (this.language) {
+      case 'ru':
+        this.switchRussianItem.classList.add(classNameActive, classNameDisable);
+      break;
+      case 'en':
+        this.switchEnglishItem.classList.add(classNameActive, classNameDisable);
+      break;
+      default: break;
+    }
   }
 
   createSwitchRussianItem() {
-    const item = new ItemList({
+    return {
       label: 'русский(RU)',
       class: 'settings__subitem',
       onClick: () => {
         if (this.language === 'ru') return;
         this.language = 'ru'
         this.changeLanguageApp('ru');
+        this.changeActiveItem(this.switchRussianItem);
       },
-    }).render();
-
-    return item;
+    };
   }
 
   createSwitchEnglishItem() {
-    const item = new ItemList({
+    return {
       label: 'English(ENG)',
       class: 'settings__subitem',
       onClick: () => {
         if (this.language === 'en') return;
         this.language = 'en'
         this.changeLanguageApp('en');
+        this.changeActiveItem(this.switchEnglishItem);
       },
-    }).render();
-
-    return item;
+    }
   }
 
   render() {
     const container = document.createElement('ul');
+    container.className = 'settings__subList';
 
-    container.append(this.createSwitchRussianItem(), this.createSwitchEnglishItem());
+    container.append(this.switchRussianItem , this.switchEnglishItem);
 
     return container;
   }

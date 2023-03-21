@@ -3,4 +3,5 @@ export default {
   unit: 'м/с',
   humidity: 'Влажность',
   error: 'Город не найден',
+  placeholder: 'Введите город',
 };

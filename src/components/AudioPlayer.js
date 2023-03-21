@@ -1,5 +1,5 @@
 import playList from '../data/playList';
-import ViewAudioPlayer from '../View/ViewAudio';
+import { ViewAudioPlayer } from '../View';
 
 class AudioPlayer {
   constructor() {
@@ -50,15 +50,15 @@ class AudioPlayer {
   }
 
   changePlayIcons() {
-    const smallIconsList = document.querySelectorAll('.item-play');
-    smallIconsList.forEach(item => item.classList.remove('item-play_active'));
+    const smallIconsList = document.querySelectorAll('.player__item-icon');
+    smallIconsList.forEach(item => item.classList.remove('player__item-icon_active'));
 
     if (this.isPlay) {
-      this.viewAudioPlayer.playButton.classList.add('pause');
-      smallIconsList[this.playNum].classList.add('item-play_active');
+      this.viewAudioPlayer.playButton.classList.add('player__button-play_active');
+      smallIconsList[this.playNum].classList.add('player__item-icon_active');
     } else {
-      this.viewAudioPlayer.playButton.classList.remove('pause');
-      smallIconsList[this.playNum].classList.remove('item-play_active');
+      this.viewAudioPlayer.playButton.classList.remove('player__button-play_active');
+      smallIconsList[this.playNum].classList.remove('player__item-icon_active');
     }
   }
 
@@ -129,7 +129,7 @@ class AudioPlayer {
     this.audio.volume = e.target.value / 100;
     if (!this.isVolume) {
       this.isVolume = true;
-      this.viewAudioPlayer.volume.classList.remove('mute');
+      this.viewAudioPlayer.volume.classList.remove('player__button-volume_mute');
     }
   }
 
@@ -138,11 +138,11 @@ class AudioPlayer {
       this.isVolume = false;
       this.memoryVolume = this.audio.volume;
       this.audio.volume = 0;
-      this.viewAudioPlayer.volume.classList.add('mute');
+      this.viewAudioPlayer.volume.classList.add('player__button-volume_mute');
       this.viewAudioPlayer.volumeProgress.volume = '0';
     } else {
       this.isVolume = true;
-      this.viewAudioPlayer.volume.classList.remove('mute');
+      this.viewAudioPlayer.volume.classList.remove('player__button-volume_mute');
       this.audio.volume = this.memoryVolume;
       this.viewAudioPlayer.volumeProgress.volume = this.memoryVolume;
     }
@@ -150,7 +150,7 @@ class AudioPlayer {
 
   render() {
     const player = document.createElement('div');
-    player.className = 'player'
+    player.className = 'header__player player'
 
     player.append(
       this.viewAudioPlayer.createControlsContainer(),

@@ -1,0 +1,108 @@
+.settings {
+  position: relative;
+  color: $settings-color;
+
+  &__container {
+    position: absolute;
+    left: 0px;
+    @include size (500px, 300px);
+    background-color: $text-color;
+    z-index: 1;
+    bottom: 44px;
+    opacity: 0;
+    @extend %flexSpace-between;
+    pointer-events: none;
+    border-radius: 7px;
+  }
+
+  &__container_active {
+    opacity: 1;
+    pointer-events: painted;
+  }
+
+  &__list {
+    padding: 15px 20px;
+    height: 100%;
+    @extend %flexColumn;
+    justify-content: space-around;
+    align-items: flex-start;
+    row-gap: 10px;
+    flex: 1;
+    border-right: 1px solid $settings-color;
+  }
+
+  &__item {
+    list-style: none;
+    cursor: pointer;
+    position: relative;
+    width: 100%;
+    text-align: left;
+
+    &_bold {
+      font-weight: 700;
+      color: $black-color;
+    }
+  }
+
+  &__submenu { 
+    flex: 2;
+    height: 100%
+  }
+
+  &__subList {
+    @extend %flexColumn;
+    justify-content: flex-start;
+    padding: 20px 0;
+  }
+
+  &__subitem{
+    list-style: none;
+    text-align: left;
+    padding: 10px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: lighten($settings-background-color, 20%);
+    }
+
+    &_active {
+      background-color: $settings-background-color;
+      color: $black-color;
+    }
+
+    &_disabled {
+      pointer-events: none;
+    }
+  }
+
+  &__button {
+    @include size (30px);
+    background-image: url("../assets/svg/icons8-setings.svg");
+    z-index: 22;
+
+    &_rotate {
+      transform: rotate(90deg);
+    }
+  }
+
+  &__sub-search {
+    padding: 20px;
+    color: $black-color;
+    height: 100%;
+    @extend %flexColumn;
+    word-break: break-all;
+    text-align: left;
+  }
+}
+
+@media (max-width: 768px) {
+  .settings {
+    &__container {
+      @include size (350px, 250px);
+    }
+
+    &__sub-search {
+      padding: 10px
+    }
+  }
+}

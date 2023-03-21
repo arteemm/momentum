@@ -1,0 +1,41 @@
+.weather {
+  @extend %flexColumn;
+  align-items: flex-start;
+  row-gap: 5px;
+  width: 180px;
+  min-height: 180px;
+  text-align: left;
+
+  &__city {
+    @include size (170px, 34px);
+    @include font (2rem, 24rem, normal);
+    padding: 5px;
+    color: $text-color;
+    border: 0;
+    outline: 0;
+    border-bottom: 1px solid $text-color;
+    background-color: transparent;
+
+    &::placeholder {  
+      font-size: 2.2rem;
+      color: $text-color;
+      opacity: .6;
+    }
+  }
+
+  &__icon {
+    font-size: 4.4rem;
+  }
+
+  &__error {
+    margin-top: -10px;
+    color: $error-color;
+  }
+
+  &__container {
+    @extend %flexSpace-between;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    column-gap: 12px;
+  }
+}

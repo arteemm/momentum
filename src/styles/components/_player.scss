@@ -1,0 +1,105 @@
+
+.player {
+
+  &__controls {
+    @extend %flexSpace-between;
+    @include size (120px, auto);
+    margin-bottom: 15px;
+  }
+
+  &__container {
+    @extend %flexSpace-between;
+    gap: 15px;
+    margin-bottom: 15px;
+  }
+
+  &__list {
+    text-align: left;
+  }
+
+  &__button-prev {
+    @include size (32px);
+    background-size: 32px 32px;
+    background-image: url("../assets/svg/play-prev.svg");
+  }
+
+  &__button-next {
+    @include size (32px);
+    background-size: 32px 32px;
+    background-image: url("../assets/svg/play-next.svg");
+  }
+
+  &__button-play {
+    @include size (40px);
+    background-size: 40px 40px;
+    background-image: url("../assets/svg/play.svg");
+
+    &_active {
+      background-image: url("../assets/svg/pause.svg");
+    }
+  }
+
+  &__duration-container {
+    padding-top: 15px;
+  }
+
+  &__audio-progress{
+    cursor: pointer;
+  }
+
+  &__volume-container {
+    @extend %flexSpace-between;
+    gap: 15px;
+  }
+
+  &__volume-progress {
+    margin-top: 17px;
+    @include size (50px, auto);
+    cursor: pointer;
+  }
+
+  &__button-volume {
+    @include size (26px, 20px);
+    background-image: url("../assets/svg/volume.svg");
+    align-self: flex-end;
+    cursor: pointer;
+
+    &_mute {
+      background-image: url("../assets/svg/mute.svg");
+    }
+  }
+
+  &__item {
+    padding: 5px;
+    padding-left: 20px;
+    opacity: .8;
+    cursor: pointer;
+    @extend %transitionMiddle;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: left;
+    align-items: center;
+    gap: 5px;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  &__item-icon {
+    @include size (16px);
+    background-image: url("../assets/svg/play-smal.svg");
+
+    &_active {
+      background-image: url("../assets/svg/pause-small.svg");
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .player {
+    &__container {
+      flex-direction: column;
+    }
+  }
+}

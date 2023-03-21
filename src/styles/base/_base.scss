@@ -1,0 +1,45 @@
+@font-face {
+  font-family: 'Arial-MT';
+  src: url("../assets/fonts/Arial-MT.woff"); 
+ }
+
+html {
+  font-size: 10px;
+  line-height: 10px;
+  scroll-behavior: smooth;
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+body {
+  @include font (1.6rem, 1.6rem, normal);
+  color: $text-color;
+  text-align: center;
+  background: center/cover, rgba(0, 0, 0, 0.5);
+  background-blend-mode: multiply;
+  transition: background-image 1s ease-in-out;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.root {
+  min-width: 480px;
+  min-height: 100vh;
+  @extend %flexColumn;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+p, ul, li {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style: none;
+}

@@ -5,10 +5,10 @@ class HiddenSubmenu {
   constructor() {
     this.audioPlayer = () => document.querySelector('.player');
     this.weather = () => document.querySelector('.weather');
-    this.time = () => document.querySelector('.time');
-    this.date = () => document.querySelector('.date');
-    this.greeting = () => document.querySelector('.greeting-container');
-    this.quote = () => document.querySelector('.quote__container');
+    this.time = () => document.querySelector('.main__time');
+    this.date = () => document.querySelector('.main__date');
+    this.greeting = () => document.querySelector('.main__container');
+    this.quote = () => document.querySelector('.footer__container');
 
     this.audioHiddenItem = new ItemList(this.createAudioHiddenItem());
     this.weatherHiddenItem = new ItemList(this.createWeatherHiddenItem());
@@ -18,7 +18,6 @@ class HiddenSubmenu {
     this.quoteHiddenItem = new ItemList(this.createQuoteHiddenItem());
 
     this.hiddenElements = JSON.parse(localStorage.getItem('settings'))?.hiddenElements || [];
-    window.addEventListener('DOMContentLoaded', this.setHiddenElementsOriginally.bind(this));
   }
 
   setHiddenElementsOriginally() {
@@ -70,10 +69,10 @@ class HiddenSubmenu {
     return{
       class: 'settings__subitem',
       onClick: () => {
-        this.audioHiddenItem.item.classList.toggle('settings__subitem_hidden');
+        this.audioHiddenItem.item.classList.toggle('settings__subitem_active');
         this.audioPlayer().classList.toggle('hidden');
         if (!mode) this.checkHiddenElements('audioPlayer');
-        if (mode) this.audioHiddenItem.class += ' settings__subitem_hidden';
+        if (mode) this.audioHiddenItem.class += ' settings__subitem_active';
       },
     };
   }
@@ -82,10 +81,10 @@ class HiddenSubmenu {
     return {
       class: 'settings__subitem',
       onClick: () => {
-        this.weatherHiddenItem.item.classList.toggle('settings__subitem_hidden');
+        this.weatherHiddenItem.item.classList.toggle('settings__subitem_active');
         this.weather().classList.toggle('hidden');
         if (!mode) this.checkHiddenElements('weather');
-        if (mode) this.weatherHiddenItem.class += ' settings__subitem_hidden';
+        if (mode) this.weatherHiddenItem.class += ' settings__subitem_active';
       }
     };
   }
@@ -94,10 +93,10 @@ class HiddenSubmenu {
     return {
       class: 'settings__subitem',
       onClick: () => {
-        this.timeHiddenItem.item.classList.toggle('settings__subitem_hidden');
+        this.timeHiddenItem.item.classList.toggle('settings__subitem_active');
         this.time().classList.toggle('hidden');
         if (!mode) this.checkHiddenElements('time');
-        if (mode) this.timeHiddenItem.class += ' settings__subitem_hidden';
+        if (mode) this.timeHiddenItem.class += ' settings__subitem_active';
       }
     };
   }
@@ -106,10 +105,10 @@ class HiddenSubmenu {
     return {
       class: 'settings__subitem',
       onClick: () => {
-        this.dateHiddenItem.item.classList.toggle('settings__subitem_hidden');
+        this.dateHiddenItem.item.classList.toggle('settings__subitem_active');
         this.date().classList.toggle('hidden');
         if (!mode) this.checkHiddenElements('date');
-        if (mode) this.dateHiddenItem.class += ' settings__subitem_hidden';
+        if (mode) this.dateHiddenItem.class += ' settings__subitem_active';
       },
     };
   }
@@ -118,10 +117,10 @@ class HiddenSubmenu {
     return {
       class: 'settings__subitem',
       onClick: () => {
-        this.greetingHiddenItem.item.classList.toggle('settings__subitem_hidden');
+        this.greetingHiddenItem.item.classList.toggle('settings__subitem_active');
         this.greeting().classList.toggle('hidden');
         if (!mode) this.checkHiddenElements('greeting');
-        if (mode) this.greetingHiddenItem.class += ' settings__subitem_hidden';
+        if (mode) this.greetingHiddenItem.class += ' settings__subitem_active';
       },
     };
   }
@@ -130,16 +129,17 @@ class HiddenSubmenu {
     return {
       class: 'settings__subitem',
       onClick: () => {
-        this.quoteHiddenItem.item.classList.toggle('settings__subitem_hidden');
+        this.quoteHiddenItem.item.classList.toggle('settings__subitem_active');
         this.quote().classList.toggle('hidden');
         if (!mode) this.checkHiddenElements('quote');
-        if (mode) this.quoteHiddenItem.class += ' settings__subitem_hidden';
+        if (mode) this.quoteHiddenItem.class += ' settings__subitem_active';
       },
     };
   }
 
   render() {
     const container = document.createElement('ul');
+    container.className = 'settings__subList';
 
     container.append(
       this.audioHiddenItem.render(),

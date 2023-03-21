@@ -1,0 +1,12 @@
+@mixin font ($size, $height: $size, $weight: 300, $style: normal) {
+  font-family: 'Arial', sans-serif;
+  font-size: $size;
+  font-style: $style;
+  font-weight: $weight;
+  line-height: $height;
+}
+
+@mixin size($width, $height: $width) {
+  width: $width;
+  height: $height;
+}

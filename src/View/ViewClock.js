@@ -3,11 +3,11 @@ import { Container, Input } from '../components';
 class ViewClock {
   constructor() {
     this.timeElem = document.createElement('time');
-    this.timeElem.className = 'time';
+    this.timeElem.className = 'main__time';
     this.dateElem = document.createElement('date');
-    this.dateElem.className = 'date';
+    this.dateElem.className = 'main__date';
     this.greetingElem = document.createElement('span');
-    this.greetingElem.className = 'greeting';
+    this.greetingElem.className = 'main__greeting';
 
     this.nameElem = new Input(this.createNameInput()).render();
   }
@@ -16,14 +16,14 @@ class ViewClock {
     const name = localStorage.getItem('name') || '';
     return {
       type: 'text',
-      className: 'name',
+      className: 'main__name',
       value: name,
     }
   }
 
   createGreetingContainer() {
     return new Container(
-      'greeting-container',
+      'main__container',
       this.greetingElem,
       this.nameElem,
     ).render();

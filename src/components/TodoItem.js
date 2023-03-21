@@ -1,5 +1,6 @@
 import Button from './Button';
-import Input from './Input'
+import Input from './Input';
+import Container from './Container';
 
 class TodoItem {
   constructor(props) {
@@ -14,11 +15,11 @@ class TodoItem {
 
   createButtonDeleteItem() {
     const button = new Button({
-      label: 'x',
+      label: '',
       type: 'button',
+      className: 'todo__button-delete button icon',
       onClick: () => this.deleteItem(this.id),
     }).render();
-    button.classList.add('close', 'control');
 
     return button;
   }
@@ -31,6 +32,14 @@ class TodoItem {
     }
   }
 
+  createContainer() {
+    return new Container(
+      'todo__item-controls',
+      this.checkbox,
+      this.createButtonDeleteItem(),
+    ).render();
+  }
+
   render() {
     this.item.className = 'todo__item';
     this.item.textContent = this.label;
@@ -41,8 +50,7 @@ class TodoItem {
      }
 
     this.item.append(
-      this.checkbox,
-      this.createButtonDeleteItem(),
+      this.createContainer(),
     );
 
     return this.item;

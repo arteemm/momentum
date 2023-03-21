@@ -7,4 +7,5 @@ export default {
   hiddenDate: 'Скрыть дату',
   hiddenGreeting: 'Скрыть приветствие',
   hiddenQuote: 'Скрыть цитаты',
+  tagPlaceholder: 'Введите тег',
 };
