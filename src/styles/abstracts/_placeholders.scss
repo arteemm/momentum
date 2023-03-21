@@ -1,0 +1,20 @@
+%transitionMiddle {
+  transition: all ease-out 0.3s;
+}
+
+%transitionFast {
+  transition: all ease-out 0.1s;
+}
+
+%flexColumn {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+%flexSpace-between {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+}

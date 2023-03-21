@@ -1,22 +1,40 @@
 import { getWeather } from '../api';
-import { viewWeather } from '../View';
+import { ViewWeather } from '../View';
+import Container from './Container';
 
 class Weather {
   constructor() {
+    this.city = localStorage.getItem('city') || 'Минск';
+    this.viewWeather = new ViewWeather({
+      city: this.city,
+      getWeatherData: this.getWeatherData.bind(this),
+    });
     this.data = {};
-    this.city = () => document.querySelector('.city');
-    this.city().value = localStorage.getItem('city') || 'Минск';
-    this.city().addEventListener('change', this.getWeatherData.bind(this));
   }
 
-  async getWeatherData() {
-    this.data = await getWeather(this.city().value);
-    viewWeather(this.data)
-    localStorage.setItem('city', this.city().value);
+  async getWeatherData(event) {
+    const inputValue = event?.target.value || this.city;
+    try {
+      const data = await getWeather(inputValue, this.viewWeather.language);
+      this.data = data;
+      this.city = inputValue;
+      this.viewWeather.showWeather(this.data);
+    } catch(err) {
+      console.error(err.message);
+      this.viewWeather.changeErrorHidden(true);
+    }
   }
 
   render() {
-    this.getWeatherData();
+    return new Container(
+      'header__weather weather',
+      this.viewWeather.searchCityInput,
+      this.viewWeather.weatherIcon,
+      this.viewWeather.error,
+      this.viewWeather.createDescriptionContainer(),
+      this.viewWeather.wind,
+      this.viewWeather.humidity,
+    ).render();
   }
 }
 

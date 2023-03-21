@@ -1,30 +1,24 @@
+@import '../../node_modules/normalize.css/normalize.css';
 @import './owfont-regular.css';
 
-@import './sass/base';
-@import './sass/header';
-@import './sass/player';
-@import './sass/weather';
-@import './sass/slider';
-@import './sass/clock';
-@import './sass/footer';
+//abstracts
+@import './abstracts/variables';
+@import './abstracts/placeholders';
+@import './abstracts/mixins';
 
-@media (max-width: 768px) {
-  .time {
-    min-height: 80px;
-    font-size: 72px;    
-  }
+//base
+@import './base/base';
 
-  .greeting-container {
-    min-height: 40px;
-    font-size: 32px;
-  }
+//components
+@import './components/button';
+@import './components/icon';
+@import './components/todo';
+@import './components/player';
+@import './components/weather';
+@import './components/settings';
+@import './components/search-bar';
 
-  .greeting {
-    padding: 5px;
-  }
-
-  .name {
-    font-size: 32px;
-    padding: 5px;
-  }
-}
+// layouts
+@import './layouts/header';
+@import './layouts/main';
+@import './layouts/footer';

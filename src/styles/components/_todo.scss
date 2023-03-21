@@ -1,0 +1,90 @@
+.todo {
+  position: relative;
+  color: $black-color;
+
+  &__container {
+    overflow-y: scroll;
+    padding: 5px 5px 0;
+    @extend %flexColumn;
+    align-items: flex-start;
+    @include size (350px, 200px);
+    background-color: $text-color;
+    border-radius: 10px;
+    position: absolute;
+    right: 0;
+    top: -220px;
+    opacity: 0;
+    pointer-events: none;
+    @extend %transitionMiddle;
+
+    &_active {
+      opacity: 1;
+      pointer-events: painted;
+    }
+  }
+
+  &__list {
+    width: 100%;
+  }
+
+  &__item {
+    text-align: left;
+    @extend %flexSpace-between;
+    word-break: break-all;
+    padding: 5px;
+
+    &_done {
+      text-decoration: line-through;
+    }
+
+    &:nth-child(even) {
+      background-color: lighten($settings-background-color , 20%);
+    }
+  }
+
+  &__button{
+    @extend %transitionFast;
+
+
+    &:hover {
+      transform: scale(1.1);
+    }
+
+    &_active {
+      color: $error-color;
+    }
+  }
+
+  &__footer {
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    background-color: $text-color;
+    padding: 5px;
+  }
+
+  &__form {
+    @extend %flexSpace-between;
+  }
+
+  &__button-clear {
+    color: $black-color;
+    border: 1px solid $settings-color;
+    border-radius: 3px;
+  }
+
+  &__item-controls {
+    @extend %flexSpace-between;
+    column-gap: 5px;
+  }
+
+  &__button-delete {
+    color: $black-color;
+    background-image: url("../assets/svg/close.svg");
+    @include size (16px);
+  }
+
+  &__checkbox {
+    cursor: pointer;
+  }
+}
